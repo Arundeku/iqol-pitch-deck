@@ -5,173 +5,800 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IQOL Developer Pitch Deck</title>
   
-  <!-- GSAP Library loaded via CDN -->
+  <!-- GSAP Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   
+  <!-- Premium Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600;1,700&display=swap" rel="stylesheet">
+  
   <style>
-    /* Base Styling & Brand Colors */
     :root {
-      --iqol-green: #1a3626; /* Dark green from the deck */
-      --iqol-gold: #c5a877;  /* Gold accent from the deck */
-      --text-light: #f4f4f4;
+      --iqol-bg-color: #F5EAE0; 
+      --iqol-text-dark: #1a3626; 
+      --iqol-gold: #b89759;
+      --gold-3d-mid: #967a46;
+      --gold-3d-dark: #6e5832;
     }
 
     body {
       margin: 0;
       padding: 0;
-      background-color: var(--iqol-green);
-      color: var(--text-light);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow: hidden; /* Prevents scrollbars during animation */
+      background-color: var(--iqol-bg-color);
+      color: var(--iqol-text-dark);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       height: 100vh;
+      position: relative;
     }
 
-    /* Initial Big Logo */
+    /* Ambient Background Ring */
+    .bg-ring {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      border: 1px solid rgba(26, 54, 38, 0.08);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* 3D IQOL Logo */
     #hero-logo {
-      font-size: 8rem;
-      font-weight: bold;
+      font-family: 'Playfair Display', serif;
+      font-size: 9rem;
+      font-weight: 700;
       color: var(--iqol-gold);
+      letter-spacing: 6px;
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%); /* Centered perfectly */
+      transform: translate(-50%, -50%);
       margin: 0;
       z-index: 10;
+      text-shadow: 
+        1px 1px 0px var(--gold-3d-mid),
+        2px 2px 0px var(--gold-3d-mid),
+        3px 3px 0px var(--gold-3d-mid),
+        4px 4px 0px var(--gold-3d-dark),
+        5px 5px 0px var(--gold-3d-dark),
+        6px 6px 0px var(--gold-3d-dark),
+        8px 8px 15px rgba(0, 0, 0, 0.15);
     }
 
-    /* The 4 Verticals Container */
+    /* THE CONNECTION TREE LINES */
+    #tree-lines {
+      position: absolute;
+      top: 26%; 
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 4;
+      opacity: 0; 
+    }
+
+    .line-stem {
+      width: 2px;
+      height: 50px;
+      background-color: var(--iqol-gold);
+      transform-origin: top;
+      transform: scaleY(0);
+    }
+
+    .line-horizontal {
+      height: 2px;
+      width: 750px; 
+      background-color: var(--iqol-gold);
+      transform-origin: center;
+      transform: scaleX(0);
+    }
+
+    .line-drops-container {
+      position: relative;
+      width: 750px;
+      height: 50px;
+    }
+
+    .line-drop {
+      position: absolute;
+      width: 2px;
+      height: 50px;
+      background-color: var(--iqol-gold);
+      top: 0;
+      transform-origin: top;
+      transform: scaleY(0);
+    }
+
+    .line-drop:nth-child(1) { left: 0px; }
+    .line-drop:nth-child(2) { left: 250px; }
+    .line-drop:nth-child(3) { left: 500px; }
+    .line-drop:nth-child(4) { left: 750px; }
+
+    /* THE 4 VERTICAL CARDS */
     #verticals-container {
       display: flex;
-      gap: 20px;
+      gap: 30px; 
       position: absolute;
-      top: 50%;
+      top: 40%;
       left: 50%;
-      transform: translate(-50%, -40%); /* Start slightly lower for a drop effect */
+      transform: translateX(-50%);
       opacity: 0;
       visibility: hidden;
-      width: 90vw;
-      max-width: 1000px;
-      justify-content: center;
+      width: 970px;
+      justify-content: space-between;
+      z-index: 5;
     }
 
-    /* Individual Vertical Cards */
     .vertical-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(197, 168, 119, 0.3);
-      border-radius: 12px;
-      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 16px;
       width: 220px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 40px rgba(26, 54, 38, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer; 
+    }
+
+    .vertical-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(26, 54, 38, 0.1);
+      border-color: var(--iqol-gold);
     }
 
     .vertical-card h2 {
-      color: var(--iqol-gold);
-      margin: 0 0 15px 0;
-      font-size: 1.5rem;
-    }
-
-    .vertical-card p {
-      font-size: 0.9rem;
-      line-height: 1.4;
-      opacity: 0.8;
+      font-family: 'Playfair Display', serif;
+      color: var(--iqol-text-dark);
       margin: 0;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      pointer-events: none;
     }
     
-    /* Navigation Hint for the Founder */
     #nav-hint {
       position: absolute;
-      bottom: 30px;
-      opacity: 0.5;
-      font-size: 0.9rem;
+      bottom: 40px;
+      opacity: 0.3;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      z-index: 10;
+      color: var(--iqol-text-dark);
+    }
+
+    /* --- STEP 1: CLEAN DETAIL VIEW --- */
+    #acn-detail-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: none; 
+      opacity: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      box-sizing: border-box;
+      z-index: 20;
+    }
+
+    .top-nav {
+      position: absolute;
+      top: 40px;
+      right: 60px;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--iqol-text-dark);
+      color: var(--iqol-text-dark);
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background: var(--iqol-text-dark);
+      color: var(--iqol-bg-color);
+    }
+
+    .detail-container {
+      display: flex;
+      gap: 60px;
+      max-width: 1200px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .detail-image-wrapper {
+      flex: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(26, 54, 38, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: white; 
+      padding: 20px;
+      position: relative;
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center;
+    }
+
+    .detail-text-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .detail-text-wrapper h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      margin: 0;
+      color: var(--iqol-text-dark);
+      line-height: 1.1;
+    }
+
+    .pitch-points {
+      background: rgba(255, 255, 255, 0.4);
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .pitch-points h3 {
+      margin-top: 0;
+      color: var(--iqol-gold);
+      font-size: 1.4rem;
       letter-spacing: 1px;
+    }
+
+    .pitch-points ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .pitch-points li {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      padding-left: 24px;
+      position: relative;
+      color: var(--iqol-text-dark);
+    }
+
+    .pitch-points li:last-child {
+      margin-bottom: 0;
+    }
+
+    .pitch-points li::before {
+      content: "•";
+      color: var(--iqol-gold);
+      position: absolute;
+      left: 0;
+      font-size: 1.5rem;
+      top: -4px;
+    }
+
+    /* Glowing CTA Button */
+    .launch-btn {
+      margin-top: 10px;
+      align-self: flex-start;
+      padding: 16px 32px;
+      background: var(--iqol-text-dark);
+      color: var(--iqol-gold);
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(26, 54, 38, 0.2);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .launch-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(26, 54, 38, 0.3);
+      color: #fff;
+    }
+
+    /* --- STEP 2: MODAL LIVE WEB VIEW --- */
+    #web-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(26, 54, 38, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 100;
+      display: none;
+      opacity: 0;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      width: 90vw;
+      height: 90vh;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      position: relative;
+      transform: scale(0.95); 
+    }
+
+    .modal-header {
+      height: 60px;
+      background: var(--iqol-text-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .modal-title {
+      color: var(--iqol-gold);
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .close-modal-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      border-radius: 30px;
+      padding: 6px 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .close-modal-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .live-website-frame {
+      width: 100%;
+      height: calc(100% - 60px);
+      border: none;
+      background: #fff;
     }
   </style>
 </head>
 <body>
 
-  <!-- Slide Elements -->
+  <!-- HUB VIEW -->
+  <div class="bg-ring" id="hub-ring"></div>
   <h1 id="hero-logo">IQOL</h1>
+  
+  <div id="tree-lines">
+    <div class="line-stem"></div>
+    <div class="line-horizontal"></div>
+    <div class="line-drops-container">
+      <div class="line-drop"></div>
+      <div class="line-drop"></div>
+      <div class="line-drop"></div>
+      <div class="line-drop"></div>
+    </div>
+  </div>
 
   <div id="verticals-container">
     <div class="vertical-card">
       <h2>alldoors</h2>
-      <p>Demand Engine & Advisory-led Selling</p>
     </div>
-    <div class="vertical-card">
+    <div class="vertical-card" id="card-acn">
       <h2>ACN</h2>
-      <p>2,700+ Verified Channel Partners</p>
     </div>
     <div class="vertical-card">
       <h2>TruEstate</h2>
-      <p>Data, Intelligence & Capital Pooling</p>
     </div>
     <div class="vertical-card">
       <h2>Vault</h2>
-      <p>Clean Closures & Legal Due Diligence</p>
     </div>
   </div>
 
-  <div id="nav-hint">Click anywhere or press Space to advance</div>
+  <div id="nav-hint">Click or press Space to begin</div>
 
-  <!-- Animation Logic -->
+  <!-- STEP 1: ACN DETAIL VIEW -->
+  <div id="acn-detail-view">
+    <div class="top-nav">
+      <button class="back-btn" id="btn-back">← Back to Hub</button>
+    </div>
+    
+    <div class="detail-container">
+      
+      <!-- REPLACED IMAGE WITH INTERACTIVE CANVAS -->
+      <div class="detail-image-wrapper">
+        <canvas id="network-canvas" width="500" height="400" style="width: 100%; height: 400px; border-radius: 12px;"></canvas>
+        
+        <!-- Only ONE button now -->
+        <div style="position: absolute; bottom: 20px; z-index: 10;">
+          <button id="btn-acn-activate" style="padding: 12px 24px; background: #1a3626; color: #b89759; border: 1px solid #b89759; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(26, 54, 38, 0.4); transition: transform 0.2s;">
+            Activate ACN Platform
+          </button>
+        </div>
+      </div>
+      
+      <div class="detail-text-wrapper">
+        <h1>ACN Distribution</h1>
+        <div class="pitch-points">
+          <h3>The Builder Mandate</h3>
+          <ul>
+            <li><strong>2,700+ RERA-Verified Partners:</strong> Instant inventory distribution across Bangalore.</li>
+            <li><strong>Exclusive Brand Presence:</strong> CPs pitch your property first based on structured incentives.</li>
+            <li><strong>The Mutual Commitment:</strong> We require a 15-20 day payout cycle to maintain high CP velocity.</li>
+            <li><strong>The Mega-Event:</strong> An exclusive 300-400 CP launch event dedicated entirely to your properties.</li>
+          </ul>
+        </div>
+        
+        <button class="launch-btn" id="btn-launch-web">Launch Live Platform</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: FULL-SCREEN WEB MODAL -->
+  <div id="web-modal">
+    <div class="modal-content" id="modal-box">
+      <div class="modal-header">
+        <span class="modal-title">IQOL / ACN Live Environment</span>
+        <button class="close-modal-btn" id="btn-close-modal">Close Window ✕</button>
+      </div>
+      <iframe src="https://iqol.in/" class="live-website-frame" title="ACN Live Platform"></iframe>
+    </div>
+  </div>
+
   <script>
-    // Prevent the animation from running multiple times if the founder double-clicks
     let hasAnimated = false;
+    const mainTl = gsap.timeline({ paused: true });
 
-    // Create a GSAP Timeline (paused by default so it waits for the click)
-    const tl = gsap.timeline({ paused: true });
+    // Hub Opening Animation
+    mainTl.to("#hero-logo", { top: "15%", fontSize: "3.5rem", duration: 1, ease: "power4.inOut", textShadow: "1px 1px 0px var(--gold-3d-mid), 2px 2px 0px var(--gold-3d-dark), 4px 4px 10px rgba(0,0,0,0.1)" }, 0);
+    mainTl.to("#nav-hint", { opacity: 0, duration: 0.5 }, 0);
+    mainTl.to("#hub-ring", { opacity: 0.5, scale: 1.1, duration: 1.5, ease: "power2.out" }, 0);
+    mainTl.set("#tree-lines", { opacity: 1 }, 0.8);
+    mainTl.to(".line-stem", { scaleY: 1, duration: 0.4, ease: "power2.out" }, 0.8);
+    mainTl.to(".line-horizontal", { scaleX: 1, duration: 0.5, ease: "power2.out" }, 1.2);
+    mainTl.to(".line-drop", { scaleY: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, 1.6);
+    mainTl.to("#verticals-container", { autoAlpha: 1, y: 10, duration: 0.6, stagger: 0.1 }, 1.8); 
 
-    // 1. Shrink the IQOL logo and move it to the top
-    tl.to("#hero-logo", {
-      top: "10%",           
-      fontSize: "3rem",     
-      duration: 1,
-      ease: "power3.inOut"  
-    }, 0); // '0' means this happens exactly when the timeline starts
-
-    // 2. Fade out the navigation hint
-    tl.to("#nav-hint", {
-      opacity: 0,
-      duration: 0.5
-    }, 0);
-
-    // 3. Make the container visible and slide it up slightly
-    tl.to("#verticals-container", {
-      autoAlpha: 1,         // GSAP handles opacity and visibility
-      yPercent: -20,        
-      duration: 0.1
-    }, 0.5); // Starts half a second into the animation 
-
-    // 4. Stagger the cards dropping in one by one for a premium feel
-    tl.from(".vertical-card", {
-      y: 50,                // Start 50px lower
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,        // 0.15 seconds delay between each card appearing
-      ease: "back.out(1.2)" // A slight "bounce" effect as they settle into place
-    }, 0.5);
-
-    // Function to play the animation
     function playTransition() {
       if (!hasAnimated) {
-        tl.play();
+        mainTl.play();
         hasAnimated = true;
       }
     }
 
-    // Trigger the animation on Mouse Click anywhere on the screen
-    window.addEventListener("click", playTransition);
+    document.body.addEventListener("click", (e) => {
+      if (!e.target.closest('.vertical-card') && !e.target.closest('#acn-detail-view') && !e.target.closest('#web-modal')) {
+        playTransition();
+      }
+    });
 
-    // Trigger the animation on Spacebar or Right Arrow key press
     window.addEventListener("keydown", (e) => {
       if (e.code === "Space" || e.code === "ArrowRight") {
         playTransition();
       }
     });
+
+    // --- NAVIGATION LOGIC & SIMULATION TRIGGER ---
+    const cardAcn = document.getElementById('card-acn');
+    const btnBack = document.getElementById('btn-back');
+    const btnLaunchWeb = document.getElementById('btn-launch-web');
+    const btnCloseModal = document.getElementById('btn-close-modal');
+    
+    const hubElements = ["#hero-logo", "#tree-lines", "#verticals-container", "#hub-ring"];
+
+    // Enter Detail View
+    cardAcn.addEventListener('click', (e) => {
+      e.stopPropagation(); 
+      gsap.to(hubElements, { 
+        opacity: 0, 
+        duration: 0.4, 
+        onComplete: () => {
+          gsap.set(hubElements, { display: "none" });
+          gsap.set("#acn-detail-view", { display: "flex", autoAlpha: 0, scale: 0.95 });
+          gsap.to("#acn-detail-view", { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" });
+          
+          // Automatically start the slow traditional animation
+          startTraditionalSimulation();
+        }
+      });
+    });
+
+    // Back to Hub
+    btnBack.addEventListener('click', () => {
+      resetSimulation(); // Stop animations when leaving
+      
+      gsap.to("#acn-detail-view", {
+        autoAlpha: 0,
+        scale: 0.95,
+        duration: 0.4,
+        onComplete: () => {
+          gsap.set("#acn-detail-view", { display: "none" });
+          gsap.set("#hero-logo", { display: "block" });
+          gsap.set("#tree-lines", { display: "flex" });
+          gsap.set("#verticals-container", { display: "flex" });
+          gsap.set("#hub-ring", { display: "block" });
+          
+          gsap.to(hubElements, { opacity: 1, duration: 0.6 });
+        }
+      });
+    });
+
+    // Web Modal Controls
+    btnLaunchWeb.addEventListener('click', () => {
+      gsap.set("#web-modal", { display: "flex", autoAlpha: 0 });
+      gsap.set("#modal-box", { y: 50, scale: 0.95 });
+      gsap.to("#web-modal", { autoAlpha: 1, duration: 0.4 });
+      gsap.to("#modal-box", { y: 0, scale: 1, duration: 0.6, ease: "power3.out" });
+    });
+
+    btnCloseModal.addEventListener('click', () => {
+      gsap.to("#modal-box", { y: 50, scale: 0.95, duration: 0.4, ease: "power2.in" });
+      gsap.to("#web-modal", { autoAlpha: 0, duration: 0.4, delay: 0.1, onComplete: () => gsap.set("#web-modal", { display: "none" }) });
+    });
+
+
+    // --- THE INTERACTIVE CANVAS ENGINE ---
+    const canvas = document.getElementById('network-canvas');
+    const ctx = canvas.getContext('2d');
+    const btnAcn = document.getElementById('btn-acn-activate');
+
+    let cw = canvas.width;
+    let ch = canvas.height;
+    
+    // Core Layout Positions
+    let cx = cw / 2;
+    let cyDev = ch / 2 + 30; // Developer sits slightly lower
+    let cyAcn = ch / 2 - 60; // ACN Hexagon sits slightly higher
+
+    let devNode, acnNode, tradData, acnData, devToAcnLine;
+    let tradTl, acnTl;
+
+    // Helper: Draw Hexagon
+    function drawHexagon(x, y, radius) {
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        let angle = (Math.PI / 3) * i - (Math.PI / 2); // Pointy top
+        let px = x + radius * Math.cos(angle);
+        let py = y + radius * Math.sin(angle);
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+    }
+
+    // Render Loop (Runs every frame)
+    function renderFrame() {
+      ctx.clearRect(0, 0, cw, ch);
+      
+      // 1. Draw Lines
+      const allLines = [...(tradData ? tradData.flatMap(d => [d.lineToCp, ...d.clients.map(c=>c.line)]) : []),
+                        ...(acnData ? acnData.flatMap(d => [d.lineToCp, ...d.clients.map(c=>c.line)]) : [])];
+      
+      if (devToAcnLine && devToAcnLine.alpha > 0) allLines.push(devToAcnLine);
+      
+      allLines.forEach(line => {
+        if (line.alpha > 0 && line.progress > 0) {
+          ctx.beginPath();
+          ctx.moveTo(line.start.x, line.start.y);
+          let currX = line.start.x + (line.end.x - line.start.x) * line.progress;
+          let currY = line.start.y + (line.end.y - line.start.y) * line.progress;
+          ctx.lineTo(currX, currY);
+          ctx.strokeStyle = line.color;
+          ctx.lineWidth = line.width;
+          ctx.globalAlpha = line.alpha;
+          ctx.stroke();
+        }
+      });
+      
+      ctx.globalAlpha = 1; // reset alpha
+
+      // 2. Draw Nodes
+      const allNodes = [...(tradData ? tradData.flatMap(d => [d.cp, ...d.clients.map(c=>c.node)]) : []),
+                        ...(acnData ? acnData.flatMap(d => [d.cp, ...d.clients.map(c=>c.node)]) : [])];
+      
+      allNodes.forEach(n => {
+        if (n.alpha > 0) {
+          ctx.globalAlpha = n.alpha;
+          ctx.fillStyle = n.color;
+          
+          // Render Square for Channel Partners, Circle for Clients
+          let s = n.size * (n.scale || 1);
+          if (n.type === 'cp') {
+            ctx.fillRect(n.x - s/2, n.y - s/2, s, s);
+          } else {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, s/2, 0, Math.PI*2);
+            ctx.fill();
+          }
+        }
+      });
+      ctx.globalAlpha = 1;
+
+      // 3. Draw ACN Hub (If active)
+      if (acnNode && acnNode.alpha > 0) {
+        let s = acnNode.size * acnNode.scale;
+        ctx.globalAlpha = acnNode.alpha;
+        drawHexagon(acnNode.x, acnNode.y, s);
+        ctx.fillStyle = '#1a3626'; // Dark green fill
+        ctx.fill();
+        ctx.strokeStyle = '#b89759'; // Gold border
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        
+        ctx.fillStyle = '#b89759';
+        ctx.font = 'bold 16px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('ACN', acnNode.x, acnNode.y);
+        ctx.globalAlpha = 1;
+      }
+
+      // 4. Draw Developer Node (Always present)
+      if (devNode) {
+        ctx.beginPath();
+        ctx.arc(devNode.x, devNode.y, devNode.size, 0, Math.PI*2);
+        ctx.fillStyle = '#1a3626';
+        ctx.fill();
+        ctx.strokeStyle = '#ccc';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 10px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('DEV', devNode.x, devNode.y);
+      }
+    }
+    
+    gsap.ticker.add(renderFrame);
+
+    // Initialize all data structures
+    function generateNetworkData() {
+      devNode = {x: cx, y: cyDev, size: 20, type: 'dev'};
+      acnNode = {x: cx, y: cyAcn, size: 30, alpha: 0, scale: 0, type: 'acn'};
+      devToAcnLine = {start: devNode, end: acnNode, progress: 0, alpha: 0, color: '#b89759', width: 3};
+      
+      tradData = [];
+      acnData = [];
+
+      // Generate 4 Traditional Paths
+      for(let i=0; i<4; i++) {
+        let angle = Math.PI + (Math.PI / 3) * i; // Spread around the bottom/sides
+        let dist = 80 + Math.random()*20;
+        let cp = {x: devNode.x + Math.cos(angle)*dist, y: devNode.y + Math.sin(angle)*dist, size: 12, alpha: 0, color: '#999', type: 'cp'};
+        let lineToCp = {start: devNode, end: cp, progress: 0, alpha: 1, color: '#ccc', width: 1.5};
+        
+        let clients = [];
+        for(let j=0; j<3; j++) {
+          let a2 = angle + (Math.random() - 0.5) * 1.5; 
+          let client = {x: cp.x + Math.cos(a2)*35, y: cp.y + Math.sin(a2)*35, size: 6, alpha: 0, color: '#666', type: 'client'};
+          let line = {start: cp, end: client, progress: 0, alpha: 1, color: '#ddd', width: 1};
+          clients.push({node: client, line: line});
+        }
+        tradData.push({cp, lineToCp, clients});
+      }
+
+      // Generate 16 ACN Paths (Explosive Growth)
+      for(let i=0; i<16; i++) {
+        let angle = (Math.PI*2 / 16) * i;
+        let dist = 90 + Math.random()*40;
+        let cp = {x: acnNode.x + Math.cos(angle)*dist, y: acnNode.y + Math.sin(angle)*dist, size: 12, alpha: 0, scale: 0, color: '#b89759', type: 'cp'};
+        let lineToCp = {start: acnNode, end: cp, progress: 0, alpha: 1, color: '#b89759', width: 2};
+        
+        let clients = [];
+        for(let j=0; j<2; j++) {
+          let a2 = angle + (Math.random() - 0.5); 
+          let client = {x: cp.x + Math.cos(a2)*30, y: cp.y + Math.sin(a2)*30, size: 6, alpha: 0, scale: 0, color: '#1a3626', type: 'client'};
+          let line = {start: cp, end: client, progress: 0, alpha: 1, color: '#a48a5c', width: 1.5};
+          clients.push({node: client, line: line});
+        }
+        acnData.push({cp, lineToCp, clients});
+      }
+    }
+
+    // Starts the auto-looping manual, slow process
+    function startTraditionalSimulation() {
+      generateNetworkData(); // Reset data
+      btnAcn.style.display = 'block';
+      gsap.set(btnAcn, {opacity: 1});
+
+      tradTl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
+      
+      // Animate each slow connection sequence
+      tradData.forEach((data, i) => {
+        let delayBase = i * 2; // Very slow pacing
+        
+        tradTl.to(data.lineToCp, {progress: 1, duration: 1.5, ease: 'power1.inOut'}, delayBase);
+        tradTl.to(data.cp, {alpha: 1, duration: 0.3}, delayBase + 1.3);
+        
+        data.clients.forEach((c, j) => {
+          tradTl.to(c.line, {progress: 1, duration: 1, ease: 'power1.inOut'}, delayBase + 1.5 + (j * 0.5));
+          tradTl.to(c.node, {alpha: 1, duration: 0.3}, delayBase + 2.3 + (j * 0.5));
+        });
+      });
+
+      // Clear the canvas at the end of the loop to start over
+      let allTradNodes = tradData.flatMap(d => [d.cp, ...d.clients.map(c=>c.node)]);
+      let allTradLines = tradData.flatMap(d => [d.lineToCp, ...d.clients.map(c=>c.line)]);
+      tradTl.to(allTradNodes, {alpha: 0, duration: 1}, "+=1");
+      tradTl.to(allTradLines, {alpha: 0, duration: 0.5}, "<");
+    }
+
+    // Trigger ACN Explosion
+    btnAcn.addEventListener('click', () => {
+      if(tradTl) tradTl.pause(); // Stop the manual loop
+      
+      // Hide the button
+      gsap.to(btnAcn, {opacity: 0, duration: 0.3, onComplete: () => btnAcn.style.display = 'none'});
+      
+      // Fade out old traditional nodes
+      let allTradNodes = tradData.flatMap(d => [d.cp, ...d.clients.map(c=>c.node)]);
+      let allTradLines = tradData.flatMap(d => [d.lineToCp, ...d.clients.map(c=>c.line)]);
+      gsap.to(allTradNodes, {alpha: 0, duration: 0.4});
+      gsap.to(allTradLines, {alpha: 0, duration: 0.4});
+
+      // Start the ACN Shockwave
+      acnTl = gsap.timeline();
+      
+      // 1. Connect Dev to ACN
+      devToAcnLine.alpha = 1;
+      acnTl.to(devToAcnLine, {progress: 1, duration: 0.4, ease: 'power2.out'});
+      
+      // 2. ACN Node Pops in
+      acnNode.alpha = 1;
+      acnTl.to(acnNode, {scale: 1, duration: 0.5, ease: 'back.out(1.7)'});
+      
+      // 3. Shockwave to Channel Partners (Squares)
+      acnData.forEach((data, i) => {
+        let stagger = 0.9 + (i * 0.03); // Rapid fire
+        
+        acnTl.to(data.lineToCp, {progress: 1, duration: 0.4, ease: 'power2.out'}, stagger);
+        acnTl.to(data.cp, {alpha: 1, scale: 1, duration: 0.2}, stagger + 0.2);
+        
+        // 4. Shockwave to Clients (Dots)
+        data.clients.forEach((c, j) => {
+          acnTl.to(c.line, {progress: 1, duration: 0.3, ease: 'power2.out'}, stagger + 0.3 + (j * 0.05));
+          acnTl.to(c.node, {alpha: 1, scale: 1, duration: 0.2}, stagger + 0.5 + (j * 0.05));
+        });
+      });
+    });
+
+    // Reset everything if user clicks back
+    function resetSimulation() {
+      if (tradTl) tradTl.kill();
+      if (acnTl) acnTl.kill();
+    }
   </script>
 </body>
 </html>
