@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IQOL Developer Pitch Deck</title>
+  
+  <!-- GSAP Library loaded via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <style>
+    /* Base Styling & Brand Colors */
+    :root {
+      --iqol-green: #1a3626; /* Dark green from the deck */
+      --iqol-gold: #c5a877;  /* Gold accent from the deck */
+      --text-light: #f4f4f4;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--iqol-green);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden; /* Prevents scrollbars during animation */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Initial Big Logo */
+    #hero-logo {
+      font-size: 8rem;
+      font-weight: bold;
+      color: var(--iqol-gold);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* Centered perfectly */
+      margin: 0;
+      z-index: 10;
+    }
+
+    /* The 4 Verticals Container */
+    #verticals-container {
+      display: flex;
+      gap: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -40%); /* Start slightly lower for a drop effect */
+      opacity: 0;
+      visibility: hidden;
+      width: 90vw;
+      max-width: 1000px;
+      justify-content: center;
+    }
+
+    /* Individual Vertical Cards */
+    .vertical-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(197, 168, 119, 0.3);
+      border-radius: 12px;
+      padding: 40px 20px;
+      width: 220px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .vertical-card h2 {
+      color: var(--iqol-gold);
+      margin: 0 0 15px 0;
+      font-size: 1.5rem;
+    }
+
+    .vertical-card p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      opacity: 0.8;
+      margin: 0;
+    }
+    
+    /* Navigation Hint for the Founder */
+    #nav-hint {
+      position: absolute;
+      bottom: 30px;
+      opacity: 0.5;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide Elements -->
+  <h1 id="hero-logo">IQOL</h1>
+
+  <div id="verticals-container">
+    <div class="vertical-card">
+      <h2>alldoors</h2>
+      <p>Demand Engine & Advisory-led Selling</p>
+    </div>
+    <div class="vertical-card">
+      <h2>ACN</h2>
+      <p>2,700+ Verified Channel Partners</p>
+    </div>
+    <div class="vertical-card">
+      <h2>TruEstate</h2>
+      <p>Data, Intelligence & Capital Pooling</p>
+    </div>
+    <div class="vertical-card">
+      <h2>Vault</h2>
+      <p>Clean Closures & Legal Due Diligence</p>
+    </div>
+  </div>
+
+  <div id="nav-hint">Click anywhere or press Space to advance</div>
+
+  <!-- Animation Logic -->
+  <script>
+    // Prevent the animation from running multiple times if the founder double-clicks
+    let hasAnimated = false;
+
+    // Create a GSAP Timeline (paused by default so it waits for the click)
+    const tl = gsap.timeline({ paused: true });
+
+    // 1. Shrink the IQOL logo and move it to the top
+    tl.to("#hero-logo", {
+      top: "10%",           
+      fontSize: "3rem",     
+      duration: 1,
+      ease: "power3.inOut"  
+    }, 0); // '0' means this happens exactly when the timeline starts
+
+    // 2. Fade out the navigation hint
+    tl.to("#nav-hint", {
+      opacity: 0,
+      duration: 0.5
+    }, 0);
+
+    // 3. Make the container visible and slide it up slightly
+    tl.to("#verticals-container", {
+      autoAlpha: 1,         // GSAP handles opacity and visibility
+      yPercent: -20,        
+      duration: 0.1
+    }, 0.5); // Starts half a second into the animation 
+
+    // 4. Stagger the cards dropping in one by one for a premium feel
+    tl.from(".vertical-card", {
+      y: 50,                // Start 50px lower
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,        // 0.15 seconds delay between each card appearing
+      ease: "back.out(1.2)" // A slight "bounce" effect as they settle into place
+    }, 0.5);
+
+    // Function to play the animation
+    function playTransition() {
+      if (!hasAnimated) {
+        tl.play();
+        hasAnimated = true;
+      }
+    }
+
+    // Trigger the animation on Mouse Click anywhere on the screen
+    window.addEventListener("click", playTransition);
+
+    // Trigger the animation on Spacebar or Right Arrow key press
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space" || e.code === "ArrowRight") {
+        playTransition();
+      }
+    });
+  </script>
+</body>
+</html>
