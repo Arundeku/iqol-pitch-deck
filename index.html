@@ -9,7 +9,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600;1,700&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -20,224 +20,106 @@
       --gold-3d-dark: #6e5832;
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--iqol-bg-color);
-      color: var(--iqol-text-dark);
-      font-family: 'Inter', sans-serif;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: 100vh;
-      position: relative;
-    }
+    body { margin: 0; padding: 0; background-color: var(--iqol-bg-color); color: var(--iqol-text-dark); font-family: 'Inter', sans-serif; overflow: hidden; display: flex; flex-direction: column; align-items: center; height: 100vh; position: relative; }
 
-    .bg-ring {
-      position: absolute;
-      width: 800px;
-      height: 800px;
-      border: 1px solid rgba(26, 54, 38, 0.08);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 0;
-      pointer-events: none;
-    }
+    .bg-ring { position: absolute; width: 800px; height: 800px; border: 1px solid rgba(26, 54, 38, 0.08); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none; }
 
-    #hero-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 9rem;
-      font-weight: 700;
-      color: var(--iqol-gold);
-      letter-spacing: 6px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      margin: 0;
-      z-index: 10;
-      text-shadow: 
-        1px 1px 0px var(--gold-3d-mid),
-        2px 2px 0px var(--gold-3d-mid),
-        3px 3px 0px var(--gold-3d-mid),
-        4px 4px 0px var(--gold-3d-dark),
-        5px 5px 0px var(--gold-3d-dark),
-        6px 6px 0px var(--gold-3d-dark),
-        8px 8px 15px rgba(0, 0, 0, 0.15);
-    }
+    #hero-logo { font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 700; color: var(--iqol-gold); letter-spacing: 6px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; z-index: 10; text-shadow: 1px 1px 0px var(--gold-3d-mid), 2px 2px 0px var(--gold-3d-mid), 3px 3px 0px var(--gold-3d-mid), 4px 4px 0px var(--gold-3d-dark), 5px 5px 0px var(--gold-3d-dark), 6px 6px 0px var(--gold-3d-dark), 8px 8px 15px rgba(0, 0, 0, 0.15); }
 
-    #tree-lines {
-      position: absolute;
-      top: 26%; 
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 4;
-      opacity: 0; 
-    }
+    #hero-subtitle { position: absolute; top: calc(50% + 95px); left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-text-dark); letter-spacing: 3px; text-transform: uppercase; z-index: 10; white-space: nowrap; }
 
-    .line-stem { width: 2px; height: 50px; background-color: var(--iqol-gold); transform-origin: top; transform: scaleY(0); }
-    .line-horizontal { height: 2px; width: 750px; background-color: var(--iqol-gold); transform-origin: center; transform: scaleX(0); }
-    .line-drops-container { position: relative; width: 750px; height: 50px; }
-    .line-drop { position: absolute; width: 2px; height: 50px; background-color: var(--iqol-gold); top: 0; transform-origin: top; transform: scaleY(0); }
-    .line-drop:nth-child(1) { left: 0px; }
-    .line-drop:nth-child(2) { left: 250px; }
-    .line-drop:nth-child(3) { left: 500px; }
-    .line-drop:nth-child(4) { left: 750px; }
-
-    #verticals-container {
-      display: flex;
-      gap: 30px; 
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      visibility: hidden;
-      width: 970px;
-      justify-content: space-between;
-      z-index: 5;
-    }
-
-    .vertical-card {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 16px;
-      width: 220px;
-      height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 20px 40px rgba(26, 54, 38, 0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer; 
-    }
-
-    .vertical-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 25px 50px rgba(26, 54, 38, 0.1);
-      border-color: var(--iqol-gold);
-    }
-
-    .vertical-card h2 {
-      font-family: 'Playfair Display', serif;
-      color: var(--iqol-text-dark);
-      margin: 0;
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-      pointer-events: none;
-    }
+    #rolling-text-container { position: absolute; top: calc(50% + 155px); left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 1.8rem; color: var(--iqol-text-dark); z-index: 10; display: flex; gap: 8px; align-items: center; }
     
-    #nav-hint {
-      position: absolute;
-      bottom: 40px;
-      opacity: 0.3;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      z-index: 10;
-      color: var(--iqol-text-dark);
-    }
+    .rolling-wrapper { position: relative; height: 2.2rem; width: 140px; overflow: hidden; }
+    .roll-word { position: absolute; top: 0; left: 0; font-weight: 700; color: var(--iqol-gold); width: 100%; line-height: 2.2rem; }
+    .w2, .w3 { opacity: 0; transform: translateY(100%); }
 
-    /* --- DETAIL VIEW --- */
-    #acn-detail-view {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: none; 
-      opacity: 0;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 60px;
-      box-sizing: border-box;
-      z-index: 20;
-    }
+    #tree-lines { position: absolute; top: 26%; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 4; opacity: 0; }
+    .line-stem { width: 2px; height: 50px; background-color: var(--iqol-gold); transform-origin: top; transform: scaleY(0); }
+    .line-horizontal { height: 2px; width: 1000px; background-color: var(--iqol-gold); transform-origin: center; transform: scaleX(0); }
+    .line-drops-container { position: relative; width: 1000px; height: 50px; }
+    .line-drop { position: absolute; width: 2px; height: 50px; background-color: var(--iqol-gold); top: 0; transform-origin: top; transform: scaleY(0); }
+    .line-drop:nth-child(1) { left: 0px; } .line-drop:nth-child(2) { left: 250px; } .line-drop:nth-child(3) { left: 500px; } .line-drop:nth-child(4) { left: 750px; } .line-drop:nth-child(5) { left: 1000px; }
 
-    .top-nav {
-      position: absolute;
-      top: 40px;
-      right: 60px;
-    }
+    #verticals-container { display: flex; gap: 30px; position: absolute; top: 40%; left: 50%; transform: translateX(-50%); opacity: 0; visibility: hidden; width: 1220px; justify-content: space-between; z-index: 5; }
 
-    .back-btn {
-      padding: 10px 20px;
-      background: transparent;
-      border: 1px solid var(--iqol-text-dark);
-      color: var(--iqol-text-dark);
-      border-radius: 30px;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      transition: all 0.2s ease;
-    }
+    .vertical-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 16px; width: 220px; height: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 40px rgba(26, 54, 38, 0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+    .vertical-card:hover { transform: translateY(-5px); box-shadow: 0 25px 50px rgba(26, 54, 38, 0.1); border-color: var(--iqol-gold); }
+    .vertical-card h2 { font-family: 'Playfair Display', serif; color: var(--iqol-text-dark); margin: 0; font-size: 1.8rem; letter-spacing: 1px; pointer-events: none; }
+    
+    #nav-hint { position: absolute; bottom: 40px; opacity: 0.3; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; z-index: 10; color: var(--iqol-text-dark); }
 
+    /* --- SHARED DETAIL VIEW STYLES --- */
+    .detail-view { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: none; opacity: 0; flex-direction: column; align-items: center; justify-content: center; padding: 60px; box-sizing: border-box; z-index: 20; background: var(--iqol-bg-color); }
+    
+    .top-nav { position: absolute; top: 40px; right: 60px; display: flex; gap: 15px; z-index: 50;}
+
+    .back-btn { padding: 10px 20px; background: transparent; border: 1px solid var(--iqol-text-dark); color: var(--iqol-text-dark); border-radius: 30px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; transition: all 0.2s ease; }
     .back-btn:hover { background: var(--iqol-text-dark); color: var(--iqol-bg-color); }
+    
+    .detail-container { display: flex; gap: 60px; max-width: 1300px; width: 100%; align-items: center; position: relative; }
 
-    .detail-container {
-      display: flex;
-      gap: 60px;
-      max-width: 1200px;
-      width: 100%;
-      align-items: center;
-    }
+    .detail-image-wrapper { flex: 1.2; border-radius: 16px; overflow: hidden; padding: 0; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 500px; }
+    
+    .map-background { position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 1; opacity: 1; }
+    .canvas-overlay { position: relative; z-index: 2; width: 100%; height: 100%; }
 
-    .detail-image-wrapper {
-      flex: 1;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(26, 54, 38, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      background: white; 
-      padding: 20px;
-      position: relative;
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center;
-    }
-
-    .detail-text-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
+    .detail-text-wrapper { flex: 1; display: flex; flex-direction: column; gap: 20px; }
     .detail-text-wrapper h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; color: var(--iqol-text-dark); line-height: 1.1; }
 
-    .pitch-points { background: rgba(255, 255, 255, 0.4); padding: 30px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.6); }
-    .pitch-points h3 { margin-top: 0; color: var(--iqol-gold); font-size: 1.4rem; letter-spacing: 1px; }
-    .pitch-points ul { list-style-type: none; padding: 0; margin: 0; }
-    .pitch-points li { margin-bottom: 20px; font-size: 1.1rem; line-height: 1.5; padding-left: 24px; position: relative; color: var(--iqol-text-dark); }
-    .pitch-points li:last-child { margin-bottom: 0; }
-    .pitch-points li::before { content: "•"; color: var(--iqol-gold); position: absolute; left: 0; font-size: 1.5rem; top: -4px; }
-
-    .launch-btn {
-      margin-top: 10px;
-      align-self: flex-start;
-      padding: 16px 32px;
-      background: var(--iqol-text-dark);
-      color: var(--iqol-gold);
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(26, 54, 38, 0.2);
+    /* --- ACN METRIC CARDS (NEW SLEEK DESIGN) --- */
+    .acn-metric-card {
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-left: 6px solid var(--iqol-text-dark);
+      padding: 25px 35px;
+      border-radius: 12px;
+      box-shadow: 0 15px 35px rgba(26, 54, 38, 0.05);
       transition: all 0.3s ease;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
-    .launch-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(26, 54, 38, 0.3); color: #fff; }
+    .acn-metric-card:hover {
+      background: rgba(255, 255, 255, 0.95);
+      border-left-color: var(--iqol-gold);
+      transform: translateX(8px);
+      box-shadow: 0 20px 40px rgba(26, 54, 38, 0.08);
+    }
+    .acn-val { 
+      font-family: 'Playfair Display', serif; 
+      font-size: 3rem; 
+      color: var(--iqol-text-dark); 
+      font-weight: 700; 
+      line-height: 1; 
+    }
+    .acn-lab { 
+      font-family: 'Inter', sans-serif; 
+      font-size: 1rem; 
+      font-weight: 700; 
+      color: var(--iqol-gold); 
+      margin-top: 8px; 
+      text-transform: uppercase; 
+      letter-spacing: 1.5px; 
+    }
+
+    /* --- EVENT GALLERY VIEW --- */
+    #acn-event-view { transform: translateX(100vw); }
+    .gallery-header { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--iqol-text-dark); margin-bottom: 30px; text-align: center; }
+    .gallery-container { width: 100%; max-width: 1100px; display: flex; flex-direction: column; gap: 20px; }
+    .hero-window { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(26, 54, 38, 0.2); display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid rgba(255, 255, 255, 0.8); }
+    .hero-window img, .hero-window video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.5s ease; }
+    .hero-window img.active, .hero-window video.active { opacity: 1; }
+    .thumbnail-strip { display: flex; gap: 15px; justify-content: center; height: 90px; }
+    .thumbnail { width: 160px; height: 100%; border-radius: 8px; overflow: hidden; cursor: pointer; opacity: 0.4; transition: all 0.3s ease; border: 2px solid transparent; position: relative; }
+    .thumbnail:hover { opacity: 0.8; }
+    .thumbnail.active { opacity: 1; border: 2px solid var(--iqol-text-dark); transform: translateY(-4px); box-shadow: 0 10px 20px rgba(26, 54, 38, 0.1); }
+    .thumbnail img, .thumbnail video { width: 100%; height: 100%; object-fit: cover; }
+    .vid-indicator { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.6); color: white; font-size: 10px; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
 
     /* --- MODAL --- */
     #web-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(26, 54, 38, 0.7); backdrop-filter: blur(20px); z-index: 100; display: none; opacity: 0; justify-content: center; align-items: center; }
@@ -250,10 +132,13 @@
   </style>
 </head>
 <body>
-
+  <div id="fade-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--iqol-bg-color); z-index: 9999; opacity: 0; pointer-events: none;"></div>
+  
   <!-- HUB VIEW -->
   <div class="bg-ring" id="hub-ring"></div>
+  
   <h1 id="hero-logo">IQOL</h1>
+  
   
   <div id="tree-lines">
     <div class="line-stem"></div>
@@ -263,48 +148,139 @@
       <div class="line-drop"></div>
       <div class="line-drop"></div>
       <div class="line-drop"></div>
+      <div class="line-drop"></div>
     </div>
   </div>
 
   <div id="verticals-container">
-    <div class="vertical-card"><h2>alldoors</h2></div>
+    <div class="vertical-card" id="card-alldoors"><h2>alldoors</h2></div>
     <div class="vertical-card" id="card-acn"><h2>ACN</h2></div>
-    <div class="vertical-card"><h2>TruEstate</h2></div>
-    <div class="vertical-card"><h2>Vault</h2></div>
+    <div class="vertical-card" id="card-truestate"><h2>TruEstate</h2></div>
+    <div class="vertical-card" id="card-vault" style="cursor: pointer; position: relative; z-index: 50;"><h2>Vault</h2></div>
+    <div class="vertical-card" id="card-masalai" style="cursor: pointer; position: relative; z-index: 50;"><h2>MASAL.ai</h2></div>
   </div>
 
   <div id="nav-hint">Click or press Space to begin</div>
 
-  <!-- ACN DETAIL VIEW -->
-  <div id="acn-detail-view">
+  <button class="back-btn" id="btn-proposal" style="position: absolute; bottom: 40px; left: 60px; opacity: 0; visibility: hidden; z-index: 10;">
+    ← Our Proposal
+  </button>
+  <button class="back-btn" id="btn-history" style="position: absolute; bottom: 40px; right: 60px; opacity: 0; visibility: hidden; z-index: 10;">
+    Our History →
+  </button>
+
+  <!-- REDESIGNED ACN PITCH VIEW -->
+  <div id="acn-detail-view" class="detail-view">
     <div class="top-nav">
-      <button class="back-btn" id="btn-back">← Back to Hub</button>
+      <button class="back-btn" id="btn-launch-web">Launch Live Platform</button>
+      <button class="back-btn" id="btn-back-acn">← Back to Hub</button>
+      <button class="back-btn" id="btn-next-event">ACN Event ➔</button>
     </div>
-    
-    <div class="detail-container">
-      <div class="detail-image-wrapper">
-        <canvas id="network-canvas" width="550" height="450" style="width: 100%; height: 450px; border-radius: 12px;"></canvas>
-        
-        <div style="position: absolute; bottom: 20px; z-index: 10;">
-          <button id="btn-acn-activate" style="padding: 12px 24px; background: #1a3626; color: #fff; border: 2px solid #1a3626; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(26, 54, 38, 0.4); transition: all 0.2s;">
-            Activate ACN Platform
-          </button>
+    <div class="detail-container" id="acn-pitch-container">
+      
+      <!-- LEFT: SHARPENED MAP -->
+      <div class="detail-image-wrapper" style="background: transparent; border: none; box-shadow: none; transform: translateY(20px);">
+        <!-- Fixed 800x500 container aligns perfectly with the JS drawing coordinates -->
+        <div style="position: relative; width: 950px; height: 600px; max-width: 100%;">
+          <img src="Picture-2.png" alt="Bengaluru Zone Map" style="position: absolute; top: -100; left: 10; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 15px 30px rgba(26,54,38,0.15)); z-index: 1;">
+          <canvas id="acn-network-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; cursor: crosshair;"></canvas>
         </div>
       </div>
       
-      <div class="detail-text-wrapper">
-        <h1>ACN Distribution</h1>
-        <div class="pitch-points">
-          <h3>The Builder Mandate</h3>
-          <ul>
-            <li><strong>2,700+ RERA-Verified Partners:</strong> Instant inventory distribution across Bangalore.</li>
-            <li><strong>Exclusive Brand Presence:</strong> CPs pitch your property first based on structured incentives.</li>
-            <li><strong>The Mutual Commitment:</strong> We require a 15-20 day payout cycle to maintain high CP velocity.</li>
-            <li><strong>The Mega-Event:</strong> An exclusive 300-400 CP launch event dedicated entirely to your properties.</li>
-          </ul>
+      <!-- RIGHT: ACN LOGO & FROSTED CARDS -->
+      <div class="detail-text-wrapper" style="flex: 1; padding-left: 60px; display: flex; flex-direction: column; justify-content: center;">
+        
+        <!-- Header with Logo (Left Aligned & Anchored) -->
+        <div class="acn-header" style="margin-bottom: 35px; opacity: 0; transform: translateY(20px); display: flex; flex-direction: column; align-items: flex-start; text-align: left; border-bottom: 2px solid rgba(26,54,38,0.1); padding-bottom: 20px;">
+          <img src="image_1868b9.png" alt="ACN Logo" style="height: 60px; margin-bottom: 12px;">
+          <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 3px;">India's First Broker Exchange</div>
         </div>
-        <button class="launch-btn" id="btn-launch-web">Launch Live Platform</button>
+
+        <!-- 3 Vertical Metric Cards -->
+        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 400px;">
+          
+          <div class="acn-metric-card" style="opacity: 0; transform: translateY(20px);">
+            <div class="acn-val">2,700+</div>
+            <div class="acn-lab">Verified Agents</div>
+          </div>
+          
+          <div class="acn-metric-card" style="opacity: 0; transform: translateY(20px);">
+            <div class="acn-val">12,000+</div>
+            <div class="acn-lab">Resale Listings</div>
+          </div>
+          
+          <div class="acn-metric-card" style="opacity: 0; transform: translateY(20px);">
+            <div class="acn-val">80+</div>
+            <div class="acn-lab">Deals / Month</div>
+          </div>
+
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- TOP-TO-BOTTOM ALLDOORS PITCH VIEW (DYNAMIC BAR CHART) -->
+  <div id="alldoors-detail-view" class="detail-view">
+    
+    <div class="top-nav">
+      <button class="back-btn" id="btn-launch-alldoors-web">Launch Live Platform</button>
+      <button class="back-btn" id="btn-back-alldoors">← Back to Hub</button>
+    </div>
+
+    <!-- Centered Vertical Content Container -->
+    <div class="alldoors-content" style="width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; padding-top: 40px;">
+      
+      <!-- 1. Header (Logo + Descriptor) -->
+      <div class="ad-header" style="text-align: center; opacity: 0; transform: translateY(20px);">
+        <img src="image_18e47f.png" alt="alldoors logo" style="height: 65px; margin-bottom: 15px;">
+        <div class="brand-subtitle">Advisory-led primary real estate distribution at scale.</div>
+
+      </div>
+
+      <!-- 2. Dynamic Bar Chart Wrapper -->
+      <div class="ad-chart-wrapper" style="flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 40px 40px 40px; border-bottom: 2px solid rgba(26, 54, 38, 0.2); margin: 30px 0; position: relative; min-height: 250px;">
+          <!-- JavaScript will dynamically inject the chart columns here -->
+      </div>
+
+      <!-- 3. Four-Pillar Footer Grid -->
+      <div class="ad-metrics-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; width: 100%; text-align: center; margin-bottom: 20px;">
+        
+        <div class="ad-metric" style="opacity: 0; transform: translateY(20px);">
+          <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1; margin-bottom: 10px;">₹350 Cr+</div>
+          <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 1px;">Transactions Last FY</div>
+        </div>
+        
+        <div class="ad-metric" style="opacity: 0; transform: translateY(20px);">
+          <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1; margin-bottom: 10px;">40,000+</div>
+          <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 1px;">Active Homebuyers</div>
+        </div>
+        
+        <div class="ad-metric" style="opacity: 0; transform: translateY(20px);">
+          <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1; margin-bottom: 10px;">10000+</div>
+          <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 1px;">Verified Homes</div>
+        </div>
+        
+        <div class="ad-metric" style="opacity: 0; transform: translateY(20px);">
+          <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1; margin-bottom: 10px;">50+</div>
+          <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 1px;">Sales Experts</div>
+          <div style="font-size: 0.8rem; color: rgba(26, 54, 38, 0.7); margin-top: 8px;"></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ACN EVENT GALLERY VIEW -->
+  <div id="acn-event-view" class="detail-view">
+    <div class="top-nav">
+      <button class="back-btn" id="btn-back-to-pitch">← Back to Pitch</button>
+      <button class="back-btn" id="btn-back-from-event">Back to Hub ⌂</button>
+    </div>
+    <h2 class="gallery-header">The ACN Mega-Event</h2>
+    <div class="gallery-container">
+      <div class="hero-window" id="hero-display"></div>
+      <div class="thumbnail-strip" id="thumbnail-strip"></div>
     </div>
   </div>
 
@@ -312,346 +288,580 @@
   <div id="web-modal">
     <div class="modal-content" id="modal-box">
       <div class="modal-header">
-        <span class="modal-title">IQOL / ACN Live Environment</span>
+        <span class="modal-title">IQOL / Live Environment</span>
         <button class="close-modal-btn" id="btn-close-modal">Close Window ✕</button>
       </div>
-      <iframe src="https://iqol.in/" class="live-website-frame"></iframe>
+      <iframe src="https://acnonline.in/" class="live-website-frame"></iframe>
+    </div>
+  </div>
+
+  <!-- ALLDOORS WEB MODAL -->
+  <div id="alldoors-web-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(26, 54, 38, 0.7); backdrop-filter: blur(20px); z-index: 100; display: none; opacity: 0; justify-content: center; align-items: center;">
+    <div class="modal-content" id="alldoors-modal-box">
+      <div class="modal-header">
+        <span class="modal-title">alldoors / Live Environment</span>
+        <button class="close-modal-btn" id="btn-close-alldoors-modal">Close Window ✕</button>
+      </div>
+      <iframe src="https://alldoors.in/" class="live-website-frame"></iframe>
     </div>
   </div>
 
   <script>
-    let hasAnimated = false;
+    // --- STATE MANAGEMENT ---
+    let appState = 'init'; 
     const mainTl = gsap.timeline({ paused: true });
 
     mainTl.to("#hero-logo", { top: "15%", fontSize: "3.5rem", duration: 1, ease: "power4.inOut", textShadow: "1px 1px 0px var(--gold-3d-mid), 2px 2px 0px var(--gold-3d-dark), 4px 4px 10px rgba(0,0,0,0.1)" }, 0);
+    mainTl.to("#hero-subtitle, #rolling-text-container", { autoAlpha: 0, y: -20, duration: 0.5 }, 0);
     mainTl.to("#nav-hint", { opacity: 0, duration: 0.5 }, 0);
     mainTl.to("#hub-ring", { opacity: 0.5, scale: 1.1, duration: 1.5, ease: "power2.out" }, 0);
     mainTl.set("#tree-lines", { opacity: 1 }, 0.8);
     mainTl.to(".line-stem", { scaleY: 1, duration: 0.4, ease: "power2.out" }, 0.8);
     mainTl.to(".line-horizontal", { scaleX: 1, duration: 0.5, ease: "power2.out" }, 1.2);
     mainTl.to(".line-drop", { scaleY: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, 1.6);
-    mainTl.to("#verticals-container", { autoAlpha: 1, y: 10, duration: 0.6, stagger: 0.1 }, 1.8); 
+    mainTl.to("#verticals-container", { autoAlpha: 1, y: 10, duration: 0.6, stagger: 0.1, onComplete: () => { appState = 'hub'; } }, 1.8); 
+    mainTl.to("#btn-history, #btn-proposal", { autoAlpha: 1, duration: 0.6 }, 1.8); 
 
-    function playTransition() { if (!hasAnimated) { mainTl.play(); hasAnimated = true; } }
-    document.body.addEventListener("click", (e) => { if (!e.target.closest('.vertical-card') && !e.target.closest('#acn-detail-view') && !e.target.closest('#web-modal')) { playTransition(); } });
-    window.addEventListener("keydown", (e) => { if (e.code === "Space" || e.code === "ArrowRight") playTransition(); });
+    if (new URLSearchParams(window.location.search).get('state') === 'hub') {
+      mainTl.progress(1); 
+      gsap.set("#btn-history, #btn-proposal", { autoAlpha: 1 });
+      appState = 'hub';
+    }
 
-    const cardAcn = document.getElementById('card-acn');
-    const btnBack = document.getElementById('btn-back');
-    const btnLaunchWeb = document.getElementById('btn-launch-web');
-    const btnCloseModal = document.getElementById('btn-close-modal');
-    const hubElements = ["#hero-logo", "#tree-lines", "#verticals-container", "#hub-ring"];
+    // --- ROLLING TEXT ANIMATION ---
+    const rollTl = gsap.timeline({ repeat: -1 });
+    rollTl.to(".w1", { y: "-100%", autoAlpha: 0, duration: 0.6, delay: 2, ease: "power2.inOut" })
+          .fromTo(".w2", { y: "100%", autoAlpha: 0 }, { y: "0%", autoAlpha: 1, duration: 0.6, ease: "power2.inOut" }, "<")
+          .to(".w2", { y: "-100%", autoAlpha: 0, duration: 0.6, delay: 2, ease: "power2.inOut" })
+          .fromTo(".w3", { y: "100%", autoAlpha: 0 }, { y: "0%", autoAlpha: 1, duration: 0.6, ease: "power2.inOut" }, "<")
+          .to(".w3", { y: "-100%", autoAlpha: 0, duration: 0.6, delay: 2, ease: "power2.inOut" })
+          .fromTo(".w1", { y: "100%", autoAlpha: 0 }, { y: "0%", autoAlpha: 1, duration: 0.6, ease: "power2.inOut" }, "<");
 
-    cardAcn.addEventListener('click', (e) => {
-      e.stopPropagation(); 
-      gsap.to(hubElements, { 
-        opacity: 0, duration: 0.4, 
-        onComplete: () => {
+    function triggerOpening() { if (appState === 'init') mainTl.play(); }
+    document.body.addEventListener("click", (e) => { 
+      if (appState === 'init' && !e.target.closest('.vertical-card') && !e.target.closest('#btn-history') && !e.target.closest('#btn-proposal')) triggerOpening(); 
+    });
+
+    const hubElements = ["#hero-logo", "#tree-lines", "#verticals-container", "#hub-ring", "#btn-history", "#btn-proposal"];
+
+    // --- NAVIGATION LOGIC ---
+    document.getElementById('card-acn').addEventListener('click', (e) => {
+      e.stopPropagation(); if (appState !== 'hub') return;
+      gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
           gsap.set(hubElements, { display: "none" });
           gsap.set("#acn-detail-view", { display: "flex", autoAlpha: 0, scale: 0.95 });
           gsap.to("#acn-detail-view", { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" });
-          startTraditionalSimulation();
-        }
-      });
+          startAcnSimulation();
+          appState = 'acn-pitch';
+      }});
     });
 
-    btnBack.addEventListener('click', () => {
-      resetSimulation(); 
-      gsap.to("#acn-detail-view", {
-        autoAlpha: 0, scale: 0.95, duration: 0.4,
-        onComplete: () => {
-          gsap.set("#acn-detail-view", { display: "none" });
-          gsap.set("#hero-logo", { display: "block" });
-          gsap.set("#tree-lines", { display: "flex" });
-          gsap.set("#verticals-container", { display: "flex" });
-          gsap.set("#hub-ring", { display: "block" });
+    document.getElementById('card-alldoors').addEventListener('click', (e) => {
+      e.stopPropagation(); if (appState !== 'hub') return;
+      gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
+          gsap.set(hubElements, { display: "none" });
+          gsap.set("#alldoors-detail-view", { display: "flex", autoAlpha: 0, scale: 0.95 });
+          gsap.to("#alldoors-detail-view", { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" });
+          startAlldoorsSimulation();
+          appState = 'alldoors-pitch';
+      }});
+    });
+
+    // --- TRUESTATE REDIRECT ---
+    const truestateCard = document.getElementById('card-truestate');
+    if (truestateCard) {
+      truestateCard.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
+          window.location.href = "truestate.html";
+        }});
+      });
+    }
+
+    // --- VAULT REDIRECT ---
+    const vaultCard = document.getElementById('card-vault');
+    if (vaultCard) {
+      vaultCard.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
+          window.location.href = "vault.html";
+        }});
+      });
+    }
+
+    // --- MASAL.AI REDIRECT ---
+    const masalaiCard = document.getElementById('card-masalai');
+    if (masalaiCard) {
+      masalaiCard.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
+          window.location.href = "masalai.html";
+        }});
+      });
+    }
+
+    // --- HISTORY REDIRECT ---
+    const historyBtn = document.getElementById('btn-history');
+    if (historyBtn) {
+      historyBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
+          window.location.href = "history.html";
+        }});
+      });
+    }
+
+    // --- PROPOSAL REDIRECT ---
+    const proposalBtn = document.getElementById('btn-proposal');
+    if (proposalBtn) {
+      proposalBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
+          window.location.href = "proposal.html";
+        }});
+      });
+    }
+
+    function returnToHub(currentViewId) {
+      gsap.to(`#${currentViewId}`, { autoAlpha: 0, scale: 0.95, duration: 0.4, onComplete: () => {
+          gsap.set(`#${currentViewId}`, { display: "none" });
+          gsap.set("#hero-logo", { display: "block" }); gsap.set("#tree-lines", { display: "flex" }); gsap.set("#verticals-container", { display: "flex" }); gsap.set("#hub-ring", { display: "block" });
+          gsap.set("#btn-history, #btn-proposal", { display: "block" });
           gsap.to(hubElements, { opacity: 1, duration: 0.6 });
-        }
-      });
+          appState = 'hub';
+      }});
+    }
+
+    document.getElementById('btn-back-acn').addEventListener('click', () => { resetAcnSimulation(); returnToHub('acn-detail-view'); });
+    document.getElementById('btn-back-alldoors').addEventListener('click', () => { resetAlldoorsSimulation(); returnToHub('alldoors-detail-view'); });
+
+    // ACN Gallery Transitions
+    document.getElementById('btn-next-event').addEventListener('click', () => {
+      if(appState !== 'acn-pitch') return;
+      appState = 'acn-gallery';
+      gsap.set("#acn-event-view", { display: "flex" });
+      gsap.to("#acn-pitch-container", { x: -200, opacity: 0, duration: 0.5, ease: "power2.inOut" });
+      gsap.to("#acn-detail-view .top-nav", { opacity: 0, duration: 0.2 }); 
+      gsap.to("#acn-event-view", { x: 0, opacity: 1, duration: 0.6, ease: "power3.out", delay: 0.2 });
+      if(acnTl) acnTl.pause();
     });
 
-    btnLaunchWeb.addEventListener('click', () => {
+    document.getElementById('btn-back-to-pitch').addEventListener('click', () => {
+      appState = 'acn-pitch';
+      gsap.to("#acn-event-view", { x: "100vw", opacity: 0, duration: 0.5, ease: "power2.inOut", onComplete: () => gsap.set("#acn-event-view", { display: "none" }) });
+      gsap.to("#acn-pitch-container", { x: 0, opacity: 1, duration: 0.6, ease: "power3.out", delay: 0.2 });
+      gsap.to("#acn-detail-view .top-nav", { opacity: 1, duration: 0.4, delay: 0.4 });
+      if(acnTl) acnTl.resume();
+    });
+
+    document.getElementById('btn-back-from-event').addEventListener('click', () => {
+      resetAcnSimulation();
+      gsap.to("#acn-detail-view", { opacity: 0, duration: 0.3 });
+      gsap.to("#acn-event-view", { opacity: 0, duration: 0.3, onComplete: () => {
+        gsap.set("#acn-event-view", { display: "none", x: "100vw" }); gsap.set("#acn-detail-view", { display: "none" }); gsap.set("#acn-pitch-container", { x: 0, opacity: 1 });
+        gsap.set("#hero-logo", { display: "block" }); gsap.set("#tree-lines", { display: "flex" }); gsap.set("#verticals-container", { display: "flex" }); gsap.set("#hub-ring", { display: "block" });
+        gsap.set("#btn-history, #btn-proposal", { display: "block" });
+        gsap.to(hubElements, { opacity: 1, duration: 0.6 });
+        appState = 'hub';
+      }});
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (appState === 'modal') return;
+
+      if (e.code === "Space" || e.code === "ArrowRight") {
+        if (appState === 'init') triggerOpening();
+        else if (appState === 'hub') document.getElementById('btn-history').click();
+        else if (appState === 'acn-pitch') {
+          gsap.to("#fade-overlay", {
+            opacity: 1,
+            duration: 0.4,
+            ease: "power2.inOut",
+            onComplete: () => {
+              window.location.href = "truestate.html";
+            }
+          });
+        }
+        else if (appState === 'acn-gallery') nextGalleryItem();
+        else if (appState === 'alldoors-pitch') {
+          resetAlldoorsSimulation();
+          gsap.to("#alldoors-detail-view", {
+            autoAlpha: 0,
+            scale: 0.95,
+            duration: 0.3,
+            onComplete: () => {
+              gsap.set("#alldoors-detail-view", { display: "none" });
+              gsap.set("#acn-detail-view", { display: "flex", autoAlpha: 0, scale: 0.95 });
+              gsap.to("#acn-detail-view", { autoAlpha: 1, scale: 1, duration: 0.5, ease: "power3.out" });
+              startAcnSimulation();
+              appState = 'acn-pitch';
+            }
+          });
+        }
+      }
+      if (e.code === "ArrowLeft") {
+        if (appState === 'hub') document.getElementById('btn-proposal').click();
+        else if (appState === 'acn-gallery') prevGalleryItem();
+        else if (appState === 'acn-pitch') {
+          resetAcnSimulation();
+          gsap.to("#acn-detail-view", {
+            autoAlpha: 0,
+            scale: 0.95,
+            duration: 0.3,
+            onComplete: () => {
+              gsap.set("#acn-detail-view", { display: "none" });
+              gsap.set("#alldoors-detail-view", { display: "flex", autoAlpha: 0, scale: 0.95 });
+              gsap.to("#alldoors-detail-view", { autoAlpha: 1, scale: 1, duration: 0.5, ease: "power3.out" });
+              startAlldoorsSimulation();
+              appState = 'alldoors-pitch';
+            }
+          });
+        }
+        else if (appState === 'alldoors-pitch') {
+          gsap.to("#fade-overlay", {
+            opacity: 1,
+            duration: 0.4,
+            ease: "power2.inOut",
+            onComplete: () => {
+              window.location.href = "history.html";
+            }
+          });
+        }
+      }
+    });
+
+    // --- ACN WEBSITE MODAL ---
+    document.getElementById('btn-launch-web').addEventListener('click', () => {
+      appState = 'modal';
       gsap.set("#web-modal", { display: "flex", autoAlpha: 0 });
       gsap.set("#modal-box", { y: 50, scale: 0.95 });
       gsap.to("#web-modal", { autoAlpha: 1, duration: 0.4 });
       gsap.to("#modal-box", { y: 0, scale: 1, duration: 0.6, ease: "power3.out" });
     });
 
-    btnCloseModal.addEventListener('click', () => {
+    document.getElementById('btn-close-modal').addEventListener('click', () => {
       gsap.to("#modal-box", { y: 50, scale: 0.95, duration: 0.4, ease: "power2.in" });
-      gsap.to("#web-modal", { autoAlpha: 0, duration: 0.4, delay: 0.1, onComplete: () => gsap.set("#web-modal", { display: "none" }) });
+      gsap.to("#web-modal", { autoAlpha: 0, duration: 0.4, delay: 0.1, onComplete: () => {
+        gsap.set("#web-modal", { display: "none" });
+        appState = 'acn-pitch';
+      }});
     });
 
-    // --- HIGH-DENSITY MONOCHROME CANVAS ENGINE ---
-    const canvas = document.getElementById('network-canvas');
-    const ctx = canvas.getContext('2d');
-    const btnAcn = document.getElementById('btn-acn-activate');
-
-    let cw = canvas.width;
-    let ch = canvas.height;
-    let cy = ch / 2;
+    // --- ALLDOORS WEBSITE MODAL ---
+    const launchAlldoorsWeb = document.getElementById('btn-launch-alldoors-web');
+    const closeAlldoorsModal = document.getElementById('btn-close-alldoors-modal');
     
-    // Core Colors based on reference image
-    const cLine = '#444444'; // Dark grey lines
-    const cFill = '#333333'; // Dark squares
-    const cBrand = '#12261a'; // Very dark green for ACN hub
+    if (launchAlldoorsWeb) {
+      launchAlldoorsWeb.addEventListener('click', () => {
+        appState = 'modal';
+        gsap.set("#alldoors-web-modal", { display: "flex", autoAlpha: 0 });
+        gsap.set("#alldoors-modal-box", { y: 50, scale: 0.95 });
+        gsap.to("#alldoors-web-modal", { autoAlpha: 1, duration: 0.4 });
+        gsap.to("#alldoors-modal-box", { y: 0, scale: 1, duration: 0.6, ease: "power3.out" });
+      });
+    }
+
+    if (closeAlldoorsModal) {
+      closeAlldoorsModal.addEventListener('click', () => {
+        gsap.to("#alldoors-modal-box", { y: 50, scale: 0.95, duration: 0.4, ease: "power2.in" });
+        gsap.to("#alldoors-web-modal", { autoAlpha: 0, duration: 0.4, delay: 0.1, onComplete: () => {
+          gsap.set("#alldoors-web-modal", { display: "none" });
+          appState = 'alldoors-pitch';
+        }});
+      });
+    }
+
+    // --- MEDIA GALLERY ENGINE ---
+    const acnMedia = [
+      { type: 'image', src: 'event1.jpg' }, { type: 'image', src: 'event2.jpg' }, { type: 'image', src: 'event3.jpg' },
+      { type: 'image', src: 'event4.jpg' }, { type: 'image', src: 'event5.jpg' }, { type: 'video', src: 'event_vid.mp4' }
+    ];
+    let currentMediaIndex = 0;
+
+    function buildGallery() {
+      const heroDisplay = document.getElementById('hero-display'); const thumbStrip = document.getElementById('thumbnail-strip');
+      heroDisplay.innerHTML = ''; thumbStrip.innerHTML = '';
+      acnMedia.forEach((media, index) => {
+        let heroElement = media.type === 'image' ? document.createElement('img') : document.createElement('video');
+        heroElement.src = media.src; heroElement.id = `hero-media-${index}`;
+        if(media.type === 'video') { heroElement.muted = true; heroElement.loop = true; heroElement.playsInline = true; }
+        heroDisplay.appendChild(heroElement);
+
+        let thumb = document.createElement('div'); thumb.className = 'thumbnail'; thumb.id = `thumb-${index}`;
+        let tMedia = media.type === 'image' ? document.createElement('img') : document.createElement('video');
+        tMedia.src = media.src; if(media.type === 'video') tMedia.muted = true;
+        thumb.appendChild(tMedia);
+        if(media.type === 'video') { let ind = document.createElement('div'); ind.className = 'vid-indicator'; ind.innerText = 'VIDEO'; thumb.appendChild(ind); }
+        thumb.addEventListener('click', () => switchMedia(index)); thumbStrip.appendChild(thumb);
+      });
+      switchMedia(0);
+    }
+
+    function switchMedia(index) {
+      const oldH = document.getElementById(`hero-media-${currentMediaIndex}`); const oldT = document.getElementById(`thumb-${currentMediaIndex}`);
+      if(oldH) { oldH.classList.remove('active'); if(oldH.tagName === 'VIDEO') oldH.pause(); }
+      if(oldT) oldT.classList.remove('active');
+      currentMediaIndex = index;
+      const newH = document.getElementById(`hero-media-${currentMediaIndex}`); const newT = document.getElementById(`thumb-${currentMediaIndex}`);
+      if(newH) { newH.classList.add('active'); if(newH.tagName === 'VIDEO') newH.play().catch(e=>e); }
+      if(newT) newT.classList.add('active');
+    }
     
-    let devNode, acnNode, tradData, acnData, devToAcnLine;
-    let tradTl, acnTl;
+    function nextGalleryItem() { switchMedia((currentMediaIndex + 1) % acnMedia.length); }
+    function prevGalleryItem() { switchMedia((currentMediaIndex - 1 + acnMedia.length) % acnMedia.length); }
+    buildGallery();
 
-    // Helper: Draw Hexagon
-    function drawHexagon(x, y, radius, isOutline) {
-      ctx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        let angle = (Math.PI / 3) * i - (Math.PI / 2); 
-        let px = x + radius * Math.cos(angle);
-        let py = y + radius * Math.sin(angle);
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
-      }
-      ctx.closePath();
-    }
+    // --- ACN CANVAS ENGINE ---
+    const acnCanvas = document.getElementById('acn-network-canvas'); 
+    const acnCtx = acnCanvas.getContext('2d');
+    let acnCw, acnCh;
+    const cLine = '#1a3626'; const cFill = '#333333'; 
+    let acnNode, cpNodes, acnTl;
 
-    // Helper: Draw User Silhouette Icon inside client hexagon
-    function drawUserIcon(x, y, radius) {
-      ctx.fillStyle = cFill;
-      // Head
-      ctx.beginPath();
-      ctx.arc(x, y - radius * 0.2, radius * 0.3, 0, Math.PI * 2);
-      ctx.fill();
-      // Body
-      ctx.beginPath();
-      ctx.arc(x, y + radius * 0.6, radius * 0.5, Math.PI, 0);
-      ctx.fill();
-    }
-
-    // Helper: Draw Arrowhead
-    function drawArrowHead(fromX, fromY, toX, toY, color) {
-      let headlen = 7; 
-      let dx = toX - fromX;
-      let dy = toY - fromY;
-      let angle = Math.atan2(dy, dx);
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.moveTo(toX, toY);
-      ctx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
-      ctx.lineTo(toX - headlen * Math.cos(angle + Math.PI / 6), toY - headlen * Math.sin(angle + Math.PI / 6));
-      ctx.lineTo(toX, toY);
-      ctx.fill();
-    }
-
-    // Render Loop
-    function renderFrame() {
-      ctx.clearRect(0, 0, cw, ch);
+    acnCanvas.addEventListener('click', function(e) {
+      if (appState !== 'acn-pitch') return;
+      const rect = acnCanvas.getBoundingClientRect();
+      const scaleX = acnCw / rect.width;
+      const scaleY = acnCh / rect.height;
+      const x = Math.round((e.clientX - rect.left) * scaleX);
+      const y = Math.round((e.clientY - rect.top) * scaleY);
       
-      // 1. Draw Lines & Arrows
-      const allLines = [...(tradData ? tradData.flatMap(d => [d.lineToCp, ...d.clients.map(c=>c.line)]) : []),
-                        ...(acnData ? acnData.flatMap(d => [d.lineToCp, ...d.clients.map(c=>c.line)]) : [])];
+      const snippet = `{ x: ${x}, y: ${y}, size: 10, alpha: 0, scale: 0, lineProgress: 0 },`;
+      console.log("Node coordinates:", snippet);
       
-      if (devToAcnLine && devToAcnLine.alpha > 0) allLines.push(devToAcnLine);
+      acnCtx.fillStyle = '#ff0000';
+      acnCtx.beginPath();
+      acnCtx.arc(x, y, 6, 0, Math.PI * 2);
+      acnCtx.fill();
       
-      allLines.forEach(line => {
-        if (line.alpha > 0 && line.progress > 0) {
-          ctx.beginPath();
-          ctx.moveTo(line.start.x, line.start.y);
-          let currX = line.start.x + (line.end.x - line.start.x) * line.lineProgress;
-          let currY = line.start.y + (line.end.y - line.start.y) * line.lineProgress;
-          ctx.lineTo(currX, currY);
-          ctx.strokeStyle = line.color;
-          ctx.lineWidth = line.width;
-          ctx.globalAlpha = line.alpha;
-          ctx.stroke();
+      navigator.clipboard.writeText(snippet).then(() => {
+        alert(`Copied to clipboard!\n\n${snippet}\n\nPaste this directly into your cpNodes array.`);
+      });
+    });
 
-          // Draw Arrowhead only for lines pointing to clients when mostly complete
-          if (line.end.type === 'client' && line.lineProgress > 0.95) {
-             drawArrowHead(line.start.x, line.start.y, currX, currY, line.color);
-          }
+    function drawHexagon(x, y, radius) { acnCtx.beginPath(); for (let i = 0; i < 6; i++) { let angle = (Math.PI / 3) * i - (Math.PI / 2); let px = x + radius * Math.cos(angle); let py = y + radius * Math.sin(angle); if (i === 0) acnCtx.moveTo(px, py); else acnCtx.lineTo(px, py); } acnCtx.closePath(); }
+    function drawUserIcon(x, y, radius) { acnCtx.fillStyle = cFill; acnCtx.beginPath(); acnCtx.arc(x, y - radius * 0.2, radius * 0.3, 0, Math.PI * 2); acnCtx.fill(); acnCtx.beginPath(); acnCtx.arc(x, y + radius * 0.6, radius * 0.5, Math.PI, 0); acnCtx.fill(); }
+    
+    function renderAcnFrame() {
+      if(appState !== 'acn-pitch') return;
+      acnCtx.clearRect(0, 0, acnCw, acnCh);
+      cpNodes.forEach(cp => {
+        if (cp.lineProgress > 0) {
+          acnCtx.beginPath(); acnCtx.moveTo(acnNode.x, acnNode.y); 
+          let currX = acnNode.x + (cp.x - acnNode.x) * cp.lineProgress; 
+          let currY = acnNode.y + (cp.y - acnNode.y) * cp.lineProgress;
+          acnCtx.lineTo(currX, currY); acnCtx.strokeStyle = cLine; acnCtx.lineWidth = 1.5; acnCtx.globalAlpha = cp.alpha; acnCtx.stroke();
         }
       });
-      ctx.globalAlpha = 1;
-
-      // 2. Draw Nodes
-      const allNodes = [...(tradData ? tradData.flatMap(d => [d.cp, ...d.clients.map(c=>c.node)]) : []),
-                        ...(acnData ? acnData.flatMap(d => [d.cp, ...d.clients.map(c=>c.node)]) : [])];
-      
-      allNodes.forEach(n => {
-        if (n.alpha > 0) {
-          ctx.globalAlpha = n.alpha;
-          let s = n.size * (n.scale || 1);
-          
-          if (n.type === 'cp') {
-            // Dark Square for Channel Partners
-            ctx.fillStyle = cFill;
-            ctx.beginPath();
-            ctx.roundRect(n.x - s/2, n.y - s/2, s, s, 3);
-            ctx.fill();
-          } else {
-            // White Hexagon with Dark Border for Clients
-            drawHexagon(n.x, n.y, s);
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-            ctx.strokeStyle = cFill;
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-            
-            // Draw User Icon inside
-            drawUserIcon(n.x, n.y, s);
-          }
+      cpNodes.forEach(cp => {
+        if (cp.alpha > 0) {
+          acnCtx.globalAlpha = cp.alpha; let s = cp.size * cp.scale;
+          drawHexagon(cp.x, cp.y, s); acnCtx.fillStyle = '#fff'; acnCtx.fill(); acnCtx.strokeStyle = '#333'; acnCtx.lineWidth = 1.5; acnCtx.stroke(); 
+          drawUserIcon(cp.x, cp.y, s);
         }
       });
-      ctx.globalAlpha = 1;
-
-      // 3. Draw ACN Hub (Hexagon)
+      acnCtx.globalAlpha = 1;
       if (acnNode && acnNode.alpha > 0) {
-        let s = acnNode.size * acnNode.scale;
-        ctx.globalAlpha = acnNode.alpha;
-        drawHexagon(acnNode.x, acnNode.y, s);
-        
-        ctx.fillStyle = cBrand; 
-        ctx.fill();
-        ctx.strokeStyle = '#fff'; // White inner border look
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        
-        // Outer dark ring to match reference
-        drawHexagon(acnNode.x, acnNode.y, s + 4);
-        ctx.strokeStyle = cBrand;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 18px Inter';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('ACN', acnNode.x, acnNode.y);
-        ctx.globalAlpha = 1;
-      }
-
-      // 4. Draw Developer Node (Left side)
-      if (devNode) {
-        ctx.beginPath();
-        ctx.arc(devNode.x, devNode.y, devNode.size, 0, Math.PI*2);
-        ctx.fillStyle = cBrand;
-        ctx.fill();
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 10px Inter';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('DEV', devNode.x, devNode.y);
+        acnCtx.globalAlpha = acnNode.alpha; let s = acnNode.size * acnNode.scale;
+        drawHexagon(acnNode.x, acnNode.y, s); acnCtx.fillStyle = '#1a3626'; acnCtx.fill(); 
+        acnCtx.strokeStyle = '#fff'; acnCtx.lineWidth = 4; acnCtx.stroke();
+        drawHexagon(acnNode.x, acnNode.y, s + 5); acnCtx.strokeStyle = '#1a3626'; acnCtx.lineWidth = 1.5; acnCtx.stroke();
+        acnCtx.fillStyle = '#fff'; acnCtx.font = 'bold 16px Inter'; acnCtx.textAlign = 'center'; acnCtx.textBaseline = 'middle'; 
+        acnCtx.fillText('ACN', acnNode.x, acnNode.y); acnCtx.globalAlpha = 1;
       }
     }
-    
-    gsap.ticker.add(renderFrame);
+    gsap.ticker.add(renderAcnFrame);
 
     function generateNetworkData() {
-      devNode = {x: 80, y: cy, size: 20, type: 'dev'};
-      acnNode = {x: 280, y: cy, size: 35, alpha: 0, scale: 0, type: 'acn'};
-      devToAcnLine = {start: devNode, end: acnNode, progress: 0, lineProgress: 0, alpha: 0, color: cLine, width: 2};
-      
-      tradData = [];
-      acnData = [];
-
-      // 4 Traditional Paths (Sparse)
-      for(let i=0; i<4; i++) {
-        let angle = -Math.PI/2.5 + (Math.PI/3.2) * i; 
-        let dist = 80 + Math.random()*20;
-        let cp = {x: devNode.x + Math.cos(angle)*dist, y: devNode.y + Math.sin(angle)*dist, size: 14, alpha: 0, color: cFill, type: 'cp'};
-        let lineToCp = {start: devNode, end: cp, progress: 0, lineProgress: 0, alpha: 1, color: cLine, width: 1.5};
-        
-        let clients = [];
-        for(let j=0; j<2; j++) {
-          let a2 = angle + (Math.random() - 0.5) * 1.5; 
-          let client = {x: cp.x + Math.cos(a2)*40, y: cp.y + Math.sin(a2)*40, size: 10, alpha: 0, type: 'client'};
-          let line = {start: cp, end: client, progress: 0, lineProgress: 0, alpha: 1, color: cLine, width: 1.5};
-          clients.push({node: client, line: line});
-        }
-        tradData.push({cp, lineToCp, clients});
-      }
-
-      // HIGH DENSITY ACN Paths (Exploding everywhere)
-      // Increasing branches to 24 for a much denser, complex look
-      for(let i=0; i<24; i++) {
-        let angle = (Math.PI*2 / 24) * i;
-        let dist = 90 + Math.random()*60; // Varying lengths
-        let cp = {x: acnNode.x + Math.cos(angle)*dist, y: acnNode.y + Math.sin(angle)*dist, size: 12, alpha: 0, scale: 0, type: 'cp'};
-        let lineToCp = {start: acnNode, end: cp, progress: 0, lineProgress: 0, alpha: 1, color: cLine, width: 1.5};
-        
-        let clients = [];
-        // 2 to 4 clients per CP for maximum density
-        let numClients = Math.floor(Math.random() * 3) + 2; 
-        for(let j=0; j<numClients; j++) {
-          let a2 = angle + (Math.random() - 0.5) * 1.2; 
-          let clientDist = 30 + Math.random()*20;
-          let client = {x: cp.x + Math.cos(a2)*clientDist, y: cp.y + Math.sin(a2)*clientDist, size: 10, alpha: 0, scale: 0, type: 'client'};
-          let line = {start: cp, end: client, progress: 0, lineProgress: 0, alpha: 1, color: cLine, width: 1};
-          clients.push({node: client, line: line});
-        }
-        acnData.push({cp, lineToCp, clients});
-      }
+      acnNode = { x: 454, y: 396, size: 30, alpha: 0, scale: 0, lineProgress: 0 },
+      cpNodes = [
+        { x: 729, y: 468, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 614, y: 299, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 665, y: 481, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 591, y: 401, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 538, y: 152, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 563, y: 571, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 222, y: 594, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 373, y: 634, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 450, y: 460, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 374, y: 520, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 480, y: 463, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 194, y: 537, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 219, y: 265, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 264, y: 412, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 388, y: 300, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 377, y: 342, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 541, y: 342, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 543, y: 463, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 476, y: 298, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 390, y: 54, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 499, y: 104, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 460, y: 267, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 419, y: 465, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 508, y: 200, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 267, y: 179, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 651, y: 425, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 279, y: 643, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 737, y: 334, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 161, y: 355, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 469, y: 631, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 297, y: 298, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 186, y: 443, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 368, y: 417, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 254, y: 502, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 452, y: 538, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 319, y: 585, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 382, y: 230, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 348, y: 137, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 584, y: 230, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 779, y: 417, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 329, y: 479, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 446, y: 130, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 205, y: 387, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 267, y: 565, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 455, y: 43, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 242, y: 316, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 614, y: 345, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 537, y: 515, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+        { x: 673, y: 291, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
+      ];
     }
 
-    function startTraditionalSimulation() {
+    function initAcnMap() {
+      const dpr = window.devicePixelRatio || 1;
+      acnCw = 950
+      acnCh = 700;
+      acnCanvas.width = acnCw * dpr;
+      acnCanvas.height = acnCh * dpr;
+      acnCtx.scale(dpr, dpr);
+      
       generateNetworkData(); 
-      btnAcn.style.display = 'block';
-      gsap.set(btnAcn, {opacity: 1, y: 0});
-
-      tradTl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
-      
-      tradData.forEach((data, i) => {
-        let delayBase = i * 2; 
-        
-        tradTl.to(data.lineToCp, {lineProgress: 1, progress: 1, duration: 1.5, ease: 'power1.inOut'}, delayBase);
-        tradTl.to(data.cp, {alpha: 1, duration: 0.3}, delayBase + 1.3);
-        
-        data.clients.forEach((c, j) => {
-          tradTl.to(c.line, {lineProgress: 1, progress: 1, duration: 1, ease: 'power1.inOut'}, delayBase + 1.5 + (j * 0.5));
-          tradTl.to(c.node, {alpha: 1, duration: 0.3}, delayBase + 2.3 + (j * 0.5));
-        });
-      });
-
-      let allTradNodes = tradData.flatMap(d => [d.cp, ...d.clients.map(c=>c.node)]);
-      let allTradLines = tradData.flatMap(d => [d.lineToCp, ...d.clients.map(c=>c.line)]);
-      tradTl.to(allTradNodes, {alpha: 0, duration: 1}, "+=1");
-      tradTl.to(allTradLines, {alpha: 0, duration: 0.5}, "<");
+      if(acnTl) acnTl.kill();
+      acnTl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
+      acnTl.to(cpNodes, {alpha: 1, scale: 1, duration: 0.4, stagger: 0.05, ease: 'back.out(2)'});
+      acnTl.to({}, {duration: 0.5}); 
+      acnTl.to(acnNode, {alpha: 1, scale: 1, duration: 0.6, ease: 'back.out(1.5)'});
+      acnTl.to(cpNodes, {lineProgress: 1, duration: 0.5, ease: 'power2.out', stagger: 0.03}, "-=0.2");
+      acnTl.to({}, {duration: 3});
+      acnTl.to([cpNodes, acnNode], {alpha: 0, duration: 0.8});
+      acnTl.set(cpNodes, {lineProgress: 0}); 
     }
 
-    btnAcn.addEventListener('click', () => {
-      if(tradTl) tradTl.pause(); 
-      
-      gsap.to(btnAcn, {opacity: 0, y: 10, duration: 0.3, onComplete: () => btnAcn.style.display = 'none'});
-      
-      let allTradNodes = tradData.flatMap(d => [d.cp, ...d.clients.map(c=>c.node)]);
-      let allTradLines = tradData.flatMap(d => [d.lineToCp, ...d.clients.map(c=>c.line)]);
-      gsap.to(allTradNodes, {alpha: 0, duration: 0.4});
-      gsap.to(allTradLines, {alpha: 0, duration: 0.4});
+    function startAcnSimulation() {
+      initAcnMap();
+      const tl = gsap.timeline();
+      tl.to(".acn-header", { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+      tl.to(".acn-metric-card", { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "power3.out" }, "-=0.4");
+    }
 
-      acnTl = gsap.timeline();
+    function resetAcnSimulation() { 
+      if(acnTl) acnTl.kill(); 
+      gsap.set(".acn-header", { y: 20, opacity: 0 });
+      gsap.set(".acn-metric-card", { y: 20, opacity: 0 });
+    }
+
+    // --- ALLDOORS DYNAMIC CHART ENGINE ---
+    function buildAlldoorsChart() {
+      const chartWrapper = document.querySelector('.ad-chart-wrapper');
+      chartWrapper.innerHTML = ''; 
       
-      devToAcnLine.alpha = 1;
-      acnTl.to(devToAcnLine, {lineProgress: 1, progress: 1, duration: 0.8, ease: 'power2.inOut'}, 0.4);
+      const alldoorsData = [
+        { month: 'JAN', val: 10 },
+        { month: 'FEB', val: 12 },
+        { month: 'MAR', val: 13 },
+        { month: 'APR', val: 17 },
+        { month: 'MAY', val: 20 },
+        { month: 'JUN', val: 25 },
+        { month: 'JUL', val: 20 }
+      ];
       
-      acnTl.to(acnNode, {alpha: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)'});
+      const maxVal = Math.max(...alldoorsData.map(d => d.val));
       
-      acnData.forEach((data, i) => {
-        let stagger = 1.7 + (i * 0.04); 
+      alldoorsData.forEach(data => {
+        const heightPct = (data.val / maxVal) * 100;
         
-        acnTl.to(data.lineToCp, {lineProgress: 1, progress: 1, duration: 0.4, ease: 'power2.out'}, stagger);
-        acnTl.to(data.cp, {alpha: 1, scale: 1, duration: 0.2}, stagger + 0.2);
+        const col = document.createElement('div');
+        col.style.display = 'flex';
+        col.style.flexDirection = 'column';
+        col.style.alignItems = 'center';
+        col.style.height = '100%';
+        col.style.justifyContent = 'flex-end';
+        col.style.flex = '1';
+        col.style.position = 'relative';
         
-        data.clients.forEach((c, j) => {
-          acnTl.to(c.line, {lineProgress: 1, progress: 1, duration: 0.3, ease: 'power2.out'}, stagger + 0.3 + (j * 0.05));
-          acnTl.to(c.node, {alpha: 1, scale: 1, duration: 0.2}, stagger + 0.5 + (j * 0.05));
-        });
+        const valLabel = document.createElement('div');
+        valLabel.className = 'ad-val-label';
+        valLabel.innerText = `₹${data.val}Cr`;
+        valLabel.style.marginBottom = '10px';
+        valLabel.style.fontFamily = "'Inter', sans-serif";
+        valLabel.style.fontWeight = '700';
+        valLabel.style.color = 'var(--iqol-text-dark)';
+        valLabel.style.opacity = '0'; 
+        valLabel.style.transform = 'translateY(10px)';
+        
+        const bar = document.createElement('div');
+        bar.className = 'ad-bar';
+        bar.style.width = '60%';
+        bar.style.maxWidth = '70px';
+        bar.style.height = `${heightPct}%`;
+        bar.style.backgroundColor = 'var(--iqol-text-dark)';
+        bar.style.borderRadius = '6px 6px 0 0';
+        bar.style.transformOrigin = 'bottom';
+        bar.style.transform = 'scaleY(0)';
+        
+        const monthLabel = document.createElement('div');
+        monthLabel.innerText = data.month;
+        monthLabel.style.position = 'absolute';
+        monthLabel.style.bottom = '-30px';
+        monthLabel.style.fontFamily = "'Inter', sans-serif";
+        monthLabel.style.fontWeight = '600';
+        monthLabel.style.fontSize = '0.9rem';
+        monthLabel.style.color = 'var(--iqol-text-dark)';
+        monthLabel.style.opacity = '0.7';
+        
+        col.appendChild(valLabel);
+        col.appendChild(bar);
+        col.appendChild(monthLabel);
+        chartWrapper.appendChild(col);
       });
-    });
+    }
 
-    function resetSimulation() {
-      if (tradTl) tradTl.kill();
-      if (acnTl) acnTl.kill();
+    function startAlldoorsSimulation() {
+      buildAlldoorsChart();
+      const tl = gsap.timeline();
+      tl.to(".ad-header", { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+      tl.to(".ad-bar", { scaleY: 1, duration: 0.8, stagger: 0.1, ease: "back.out(1.5)" }, "-=0.4");
+      tl.to(".ad-val-label", { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.6");
+      tl.to(".ad-metric", { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out" }, "-=0.2");
+    }
+
+    function resetAlldoorsSimulation() {
+      gsap.set(".ad-header", { y: 20, opacity: 0 });
+      gsap.set(".ad-bar", { scaleY: 0 });
+      gsap.set(".ad-val-label", { y: 10, opacity: 0 });
+      gsap.set(".ad-metric", { y: 20, opacity: 0 });
+    }
+
+    // Check if URL requests opening a specific vertical directly
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('open') === 'alldoors') {
+      mainTl.progress(1);
+      appState = 'alldoors-pitch';
+      gsap.set("#hero-logo, #tree-lines, #verticals-container, #hub-ring, #btn-history, #btn-proposal", { display: "none" });
+      gsap.set("#alldoors-detail-view", { display: "flex", autoAlpha: 1, scale: 1 });
+      startAlldoorsSimulation();
+    } else if (urlParams.get('open') === 'acn') {
+      mainTl.progress(1);
+      appState = 'acn-pitch';
+      gsap.set("#hero-logo, #tree-lines, #verticals-container, #hub-ring, #btn-history, #btn-proposal", { display: "none" });
+      gsap.set("#acn-detail-view", { display: "flex", autoAlpha: 1, scale: 1 });
+      startAcnSimulation();
     }
   </script>
 </body>
