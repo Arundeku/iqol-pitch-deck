@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Masal.ai — IQOL</title>
+  <title>MASAL.ai — IQOL</title>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   
@@ -43,6 +43,27 @@
       z-index: 9999;
       opacity: 1; 
       pointer-events: none;
+    }
+
+    /* --- NEW TOP-HEAVY MASAL.AI BACKGROUND --- */
+    .masal-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1; /* Stays behind your cards */
+      pointer-events: none;
+      opacity: 0; 
+    }
+
+    @keyframes dataFall {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -40; } /* Creates the falling data effect */
+    }
+
+    .funnel-line {
+      animation: dataFall 1.5s linear infinite;
     }
 
     /* --- TOP NAV BUTTONS --- */
@@ -85,6 +106,7 @@
       padding: 20px 40px;
       box-sizing: border-box;
       gap: 25px;
+      z-index: 10; /* Keeps content above background */
     }
 
     /* CENTER HEADER */
@@ -92,14 +114,15 @@
       text-align: center;
       opacity: 0;
       transform: translateY(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .masal-header-center h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.2rem;
-      margin: 0;
-      color: var(--iqol-text-dark);
-      line-height: 1.1;
+    .masal-header-center img {
+      height: 70px; /* Adjusted height for the logo */
+      object-fit: contain;
+      margin-bottom: 5px;
     }
 
     .masal-header-center p {
@@ -122,7 +145,7 @@
     }
 
     .product-box {
-      background: rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-top: 4px solid var(--iqol-text-dark);
@@ -166,7 +189,7 @@
       font-size: 0.9rem;
       font-weight: 600;
       color: var(--iqol-text-dark);
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.8);
       padding: 10px 14px;
       border-radius: 8px;
       border: 1px solid rgba(184, 151, 89, 0.2);
@@ -337,16 +360,61 @@
 
   <div id="fade-overlay"></div>
 
+  <!-- NEW BACKGROUND: TOP-HEAVY VOICE WAVES & DIGITAL FUNNELS -->
+  <div class="masal-bg" id="anim-masal-bg">
+    <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width: 100%; height: 100%;">
+      <defs>
+        <!-- Grid that only exists in the top half to avoid wasting rendering power behind cards -->
+        <pattern id="top-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+          <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(26, 54, 38, 0.05)" stroke-width="2"/>
+        </pattern>
+      </defs>
+
+      <!-- Base Grid (Top 45% only) -->
+      <rect width="100%" height="45%" fill="url(#top-grid)" />
+
+      <!-- AI Voice Ribbons (Sweeping across the top open space behind the title) -->
+      <g fill="none" stroke="rgba(184, 151, 89, 0.5)" stroke-width="3">
+        <path d="M -100 150 C 400 350, 700 -50, 960 150 C 1220 350, 1520 -50, 2020 150" />
+        <path d="M -100 200 C 400 400, 700 0, 960 200 C 1220 400, 1520 0, 2020 200" opacity="0.5"/>
+        <path d="M -100 250 C 400 450, 700 50, 960 250 C 1220 450, 1520 50, 2020 250" opacity="0.2"/>
+      </g>
+
+      <!-- Automated Funnel Lines (Vertical Data Drops framing the empty sides) -->
+      <g stroke="rgba(26, 54, 38, 0.3)" stroke-width="3" stroke-dasharray="20 20" class="funnel-line">
+        <!-- Left Edge Funnels -->
+        <line x1="80" y1="0" x2="80" y2="400" />
+        <line x1="160" y1="0" x2="160" y2="280" />
+        <line x1="240" y1="0" x2="240" y2="350" />
+        
+        <!-- Right Edge Funnels -->
+        <line x1="1680" y1="0" x2="1680" y2="350" />
+        <line x1="1760" y1="0" x2="1760" y2="280" />
+        <line x1="1840" y1="0" x2="1840" y2="400" />
+      </g>
+
+      <!-- Glowing Funnel Nodes at the bottom of the dropping lines -->
+      <g fill="var(--iqol-gold)">
+        <circle cx="80" cy="400" r="6" />
+        <circle cx="160" cy="280" r="5" />
+        <circle cx="240" cy="350" r="7" />
+        
+        <circle cx="1680" cy="350" r="7" />
+        <circle cx="1760" cy="280" r="5" />
+        <circle cx="1840" cy="400" r="6" />
+      </g>
+    </svg>
+  </div>
+
   <div class="top-nav">
     <button class="back-btn" id="btn-launch-web">Launch Live Platform</button>
-    <a href="index.html?state=hub" class="back-btn" id="btn-back-hub">← Back to Hub</a>
   </div>
 
   <div class="detail-container">
     
-    <!-- CENTER HEADER -->
+    <!-- CENTER HEADER WITH LOGO -->
     <div class="masal-header-center" id="anim-header">
-      <h1>Masal.ai</h1>
+      <img src="MASAL-LOGO.png" alt="Masal AI Logo">
       <p>AI Infrastructure & Automated Funnels</p>
     </div>
 
@@ -367,6 +435,7 @@
 
         <div class="action-row">
           <button class="action-btn" onclick="openCalcModal()">Compare Costs</button>
+          <!-- Opens in a new tab to bypass iframe blocks -->
           <button class="action-btn" onclick="window.open('https://iqol-marketing.el.r.appspot.com/', '_blank')">Give Demo</button>
         </div>
       </div>
@@ -384,6 +453,7 @@
         </div>
 
         <div class="action-row">
+          <!-- Opens in a new tab to bypass iframe blocks -->
           <button class="action-btn" onclick="window.open('https://masal.ai/', '_blank')">Give Demo</button>
         </div>
       </div>
@@ -447,6 +517,7 @@
         <span class="modal-title" style="color: var(--iqol-gold); font-weight: 600;" id="modal-title-text">Masal.ai / Live Environment</span>
         <button id="btn-close-modal">Close Window ✕</button>
       </div>
+      <!-- URL is now dynamically injected via Javascript -->
       <iframe src="" class="live-website-frame" style="width: 100%; height: calc(100% - 60px); border: none;"></iframe>
     </div>
   </div>
@@ -458,7 +529,8 @@
 
       // 2. Entrance Animation
       const tl = gsap.timeline({ delay: 0.1 });
-      tl.to("#anim-header", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
+      tl.to("#anim-masal-bg", { opacity: 1, duration: 1.5, ease: "power2.out" }, 0)
+        .to("#anim-header", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.2)
         .to("#anim-split", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.4");
 
       // 3. Smooth Navigation
@@ -468,15 +540,6 @@
           duration: 0.4,
           ease: "power2.inOut",
           onComplete: () => window.location.href = targetUrl
-        });
-      }
-
-      // Intercept Back to Hub button for smooth transition
-      const backHubBtn = document.getElementById('btn-back-hub');
-      if (backHubBtn) {
-        backHubBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          smoothNavigate(backHubBtn.getAttribute('href'));
         });
       }
 
