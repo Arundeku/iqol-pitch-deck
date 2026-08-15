@@ -45,6 +45,20 @@
       pointer-events: none;
     }
 
+    /* --- PURE CODE CITYSCAPE BACKGROUND --- */
+    .cityscape-bg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 42vh; 
+      z-index: 1; 
+      pointer-events: none; 
+      color: var(--iqol-text-dark); 
+      opacity: 0; 
+      transform: translateY(30px);
+    }
+
     .top-nav {
       position: absolute;
       top: 40px;
@@ -81,6 +95,8 @@
       align-items: center;
       padding: 40px 60px;
       box-sizing: border-box;
+      position: relative;
+      z-index: 10; 
     }
 
     /* --- LEFT SIDE: ENGINE METRICS --- */
@@ -152,9 +168,9 @@
     }
 
     .sub-metric-card {
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       padding: 18px 5px;
       border-radius: 12px;
       text-align: center;
@@ -198,7 +214,7 @@
     }
 
     .executive-card {
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.6);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-left: 5px solid var(--iqol-text-dark);
@@ -236,6 +252,100 @@
 <body>
 
   <div id="fade-overlay"></div>
+
+  <!-- HIGH DETAIL INLINE SVG CITYSCAPE -->
+  <div class="cityscape-bg" id="anim-city">
+    <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax meet" style="width: 100%; height: 100%;">
+      <defs>
+        <!-- 5 Distinct Window Patterns -->
+        <pattern id="grid-sq" width="16" height="16" patternUnits="userSpaceOnUse">
+          <rect width="16" height="16" fill="none" stroke="currentColor" stroke-width="0.75" opacity="0.2"/>
+        </pattern>
+        <pattern id="grid-wide" width="24" height="12" patternUnits="userSpaceOnUse">
+          <rect width="24" height="12" fill="none" stroke="currentColor" stroke-width="0.75" opacity="0.2"/>
+        </pattern>
+        <pattern id="grid-tall" width="12" height="24" patternUnits="userSpaceOnUse">
+          <rect width="12" height="24" fill="none" stroke="currentColor" stroke-width="0.75" opacity="0.2"/>
+        </pattern>
+        <pattern id="lines-vert" width="12" height="10" patternUnits="userSpaceOnUse">
+          <line x1="6" y1="0" x2="6" y2="10" stroke="currentColor" stroke-width="0.75" opacity="0.2"/>
+        </pattern>
+        <pattern id="lines-horiz" width="10" height="16" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="8" x2="10" y2="8" stroke="currentColor" stroke-width="0.75" opacity="0.2"/>
+        </pattern>
+      </defs>
+
+      <!-- BACKGROUND LAYER (Faintest, deep background) -->
+      <g fill="rgba(26, 54, 38, 0.02)" stroke="rgba(26, 54, 38, 0.15)" stroke-width="1.2">
+        <rect x="10" y="150" width="60" height="150" fill="url(#lines-horiz)"/>
+        <rect x="90" y="100" width="70" height="200" fill="url(#grid-sq)"/>
+        <polygon points="125,70 160,100 90,100"/>
+        <rect x="220" y="140" width="90" height="160" />
+        <rect x="360" y="90" width="60" height="210" fill="url(#lines-vert)"/>
+        <rect x="450" y="160" width="110" height="140" fill="url(#grid-wide)"/>
+        <rect x="620" y="80" width="80" height="220" />
+        <rect x="760" y="130" width="90" height="170" fill="url(#grid-tall)"/>
+        <rect x="890" y="110" width="70" height="190" fill="url(#lines-horiz)"/>
+        <rect x="1020" y="70" width="100" height="230" fill="url(#grid-sq)"/>
+        <polygon points="1070,30 1120,70 1020,70"/>
+        <rect x="1150" y="140" width="60" height="160" />
+      </g>
+
+      <!-- FOREGROUND LAYER (Sharper strokes, masks background with bg color) -->
+      <g fill="rgba(26, 54, 38, 0.03)" stroke="rgba(26, 54, 38, 0.2)" stroke-width="1.5">
+        
+        <!-- Building 1: Left Edge Stepped -->
+        <rect x="-10" y="200" width="70" height="100" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="-10" y="200" width="70" height="100" fill="url(#grid-wide)"/>
+        
+        <!-- Building 2: Tall with Spire & Ring -->
+        <rect x="140" y="110" width="80" height="190" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="140" y="110" width="80" height="190" fill="url(#grid-tall)"/>
+        <line x1="180" y1="110" x2="180" y2="60" stroke="rgba(26, 54, 38, 0.2)" stroke-width="2"/>
+        <rect x="178" y="50" width="4" height="10" fill="rgba(26, 54, 38, 0.2)" stroke="none"/>
+
+        <!-- Building 3: Wide Modern with Ledge -->
+        <rect x="280" y="180" width="120" height="120" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="280" y="180" width="120" height="120" fill="url(#lines-vert)"/>
+        <rect x="275" y="180" width="130" height="8" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="275" y="180" width="130" height="8" />
+
+        <!-- Building 4: The Centerpiece (Tallest Foreground with Angled Roof) -->
+        <polygon points="460,110 500,70 540,110" fill="#F5EAE0" opacity="0.95"/>
+        <polygon points="460,110 500,70 540,110" />
+        <rect x="460" y="110" width="80" height="190" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="460" y="110" width="80" height="190" fill="url(#grid-sq)"/>
+        <circle cx="500" cy="130" r="10" fill="none" stroke="rgba(26, 54, 38, 0.2)" stroke-width="1.5"/>
+
+        <!-- Building 5: Standard Block -->
+        <rect x="580" y="150" width="100" height="150" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="580" y="150" width="100" height="150" fill="url(#grid-wide)"/>
+        
+        <!-- Building 6: Stepped Tower -->
+        <rect x="710" y="130" width="70" height="170" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="710" y="130" width="70" height="170" fill="url(#lines-vert)"/>
+        <rect x="720" y="100" width="50" height="30" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="720" y="100" width="50" height="30" fill="url(#lines-vert)"/>
+        <rect x="735" y="70" width="20" height="30" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="735" y="70" width="20" height="30" fill="url(#lines-vert)"/>
+
+        <!-- Building 7: Slanted Tech Roof -->
+        <polygon points="840,210 930,160 930,300 840,300" fill="#F5EAE0" opacity="0.95"/>
+        <polygon points="840,210 930,160 930,300 840,300" />
+        <rect x="840" y="210" width="90" height="90" fill="url(#grid-sq)"/>
+
+        <!-- Building 8: Massive Block with Thick Overhang -->
+        <rect x="960" y="160" width="110" height="140" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="960" y="160" width="110" height="140" fill="url(#grid-tall)"/>
+        <rect x="955" y="160" width="120" height="6" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="955" y="160" width="120" height="6" />
+
+        <!-- Building 9: Right Edge -->
+        <rect x="1110" y="190" width="100" height="110" fill="#F5EAE0" opacity="0.95"/>
+        <rect x="1110" y="190" width="100" height="110" fill="url(#lines-horiz)"/>
+      </g>
+    </svg>
+  </div>
 
   <div class="top-nav">
     <button class="back-btn" id="btn-launch-web">Launch Live Platform</button>
@@ -306,9 +416,10 @@
       // 1. Fade out overlay
       gsap.to("#fade-overlay", { opacity: 0, duration: 0.4, ease: "power2.inOut" });
 
-      // 2. Coordinated Entrance Sequence
+      // 2. Coordinated Entrance Sequence (Now includes Cityscape)
       const tl = gsap.timeline({ delay: 0.1 });
-      tl.to("#anim-header", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
+      tl.to("#anim-city", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" })
+        .to("#anim-header", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.8")
         .to("#anim-circle", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.4")
         .to("#anim-subgrid", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.4")
         .to("#anim-right", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.5");
@@ -331,7 +442,7 @@
         });
       }
 
-      // Website Launch Logic - Now opens in a new tab safely
+      // Website Launch Logic
       const launchWebBtn = document.getElementById('btn-launch-web');
       if (launchWebBtn) {
         launchWebBtn.addEventListener('click', () => {
