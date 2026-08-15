@@ -24,16 +24,38 @@
 
     .bg-ring { position: absolute; width: 800px; height: 800px; border: 1px solid rgba(26, 54, 38, 0.08); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none; }
 
+    /* --- INTRO VIEW STYLES --- */
     #hero-logo { font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 700; color: var(--iqol-gold); letter-spacing: 6px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; z-index: 10; text-shadow: 1px 1px 0px var(--gold-3d-mid), 2px 2px 0px var(--gold-3d-mid), 3px 3px 0px var(--gold-3d-mid), 4px 4px 0px var(--gold-3d-dark), 5px 5px 0px var(--gold-3d-dark), 6px 6px 0px var(--gold-3d-dark), 8px 8px 15px rgba(0, 0, 0, 0.15); }
+    
+    /* Subtitle moved to 110px */
+    #hero-subtitle { position: absolute; top: calc(50% + 110px); left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-text-dark); letter-spacing: 3px; text-transform: uppercase; z-index: 10; white-space: nowrap; }
 
-    #hero-subtitle { position: absolute; top: calc(50% + 95px); left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-text-dark); letter-spacing: 3px; text-transform: uppercase; z-index: 10; white-space: nowrap; }
-
+    /* Rolling text kept at 155px */
     #rolling-text-container { position: absolute; top: calc(50% + 155px); left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 1.8rem; color: var(--iqol-text-dark); z-index: 10; display: flex; gap: 8px; align-items: center; }
     
-    .rolling-wrapper { position: relative; height: 2.2rem; width: 140px; overflow: hidden; }
-    .roll-word { position: absolute; top: 0; left: 0; font-weight: 700; color: var(--iqol-gold); width: 100%; line-height: 2.2rem; }
-    .w2, .w3 { opacity: 0; transform: translateY(100%); }
+    .spin-container {
+      display: inline-flex;
+      flex-direction: column;
+      height: 2.5rem; 
+      overflow: hidden;
+    }
 
+    .spin-container span {
+      height: 2.5rem;
+      line-height: 2.5rem;
+      color: var(--iqol-gold);
+      font-weight: 700;
+      animation: spinWords 6s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    }
+
+    @keyframes spinWords {
+      0%, 20% { transform: translateY(0); }
+      33%, 53% { transform: translateY(-2.5rem); }
+      66%, 86% { transform: translateY(-5rem); }
+      100% { transform: translateY(-7.5rem); }
+    }
+
+    /* --- TREE LINES & CARDS --- */
     #tree-lines { position: absolute; top: 26%; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 4; opacity: 0; }
     .line-stem { width: 2px; height: 50px; background-color: var(--iqol-gold); transform-origin: top; transform: scaleY(0); }
     .line-horizontal { height: 2px; width: 1000px; background-color: var(--iqol-gold); transform-origin: center; transform: scaleX(0); }
@@ -67,44 +89,25 @@
     .detail-text-wrapper { flex: 1; display: flex; flex-direction: column; gap: 20px; }
     .detail-text-wrapper h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; color: var(--iqol-text-dark); line-height: 1.1; }
 
-    /* --- ACN METRIC CARDS (NEW SLEEK DESIGN) --- */
-    .acn-metric-card {
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+    /* --- UPDATED: ACN METRIC BOXES --- */
+    .acn-metric-box {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-left: 6px solid var(--iqol-text-dark);
-      padding: 25px 35px;
       border-radius: 12px;
-      box-shadow: 0 15px 35px rgba(26, 54, 38, 0.05);
-      transition: all 0.3s ease;
-      width: 100%;
-      box-sizing: border-box;
+      padding: 25px 35px;
+      box-shadow: 0 15px 35px rgba(26, 54, 38, 0.08);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      text-align: left;
+      width: 100%;
+      max-width: 420px;
     }
-    .acn-metric-card:hover {
-      background: rgba(255, 255, 255, 0.95);
+    .acn-metric-box.gold-border {
       border-left-color: var(--iqol-gold);
-      transform: translateX(8px);
-      box-shadow: 0 20px 40px rgba(26, 54, 38, 0.08);
-    }
-    .acn-val { 
-      font-family: 'Playfair Display', serif; 
-      font-size: 3rem; 
-      color: var(--iqol-text-dark); 
-      font-weight: 700; 
-      line-height: 1; 
-    }
-    .acn-lab { 
-      font-family: 'Inter', sans-serif; 
-      font-size: 1rem; 
-      font-weight: 700; 
-      color: var(--iqol-gold); 
-      margin-top: 8px; 
-      text-transform: uppercase; 
-      letter-spacing: 1.5px; 
     }
 
     /* --- EVENT GALLERY VIEW --- */
@@ -138,7 +141,17 @@
   <div class="bg-ring" id="hub-ring"></div>
   
   <h1 id="hero-logo">IQOL</h1>
+  <div id="hero-subtitle">The Operating System for Real Estate Sales</div>
   
+  <div id="rolling-text-container">
+    <span>Sell</span>
+    <div class="spin-container">
+      <span>Faster.</span>
+      <span>Smarter.</span>
+      <span>Right.</span>
+      <span>Faster.</span>
+    </div>
+  </div>
   
   <div id="tree-lines">
     <div class="line-stem"></div>
@@ -157,7 +170,7 @@
     <div class="vertical-card" id="card-acn"><h2>ACN</h2></div>
     <div class="vertical-card" id="card-truestate"><h2>TruEstate</h2></div>
     <div class="vertical-card" id="card-vault" style="cursor: pointer; position: relative; z-index: 50;"><h2>Vault</h2></div>
-    <div class="vertical-card" id="card-masalai" style="cursor: pointer; position: relative; z-index: 50;"><h2>MASAL.ai</h2></div>
+    <div class="vertical-card" id="card-masalai" style="cursor: pointer; position: relative; z-index: 50;"><h2>masal.ai</h2></div>
   </div>
 
   <div id="nav-hint">Click or press Space to begin</div>
@@ -166,7 +179,7 @@
     ← Our Proposal
   </button>
   <button class="back-btn" id="btn-history" style="position: absolute; bottom: 40px; right: 60px; opacity: 0; visibility: hidden; z-index: 10;">
-    Our History →
+    Our History ➔
   </button>
 
   <!-- REDESIGNED ACN PITCH VIEW -->
@@ -187,31 +200,32 @@
         </div>
       </div>
       
-      <!-- RIGHT: ACN LOGO & FROSTED CARDS -->
-      <div class="detail-text-wrapper" style="flex: 1; padding-left: 60px; display: flex; flex-direction: column; justify-content: center;">
+      <!-- RIGHT: ACN LOGO & ZERO FLUFF METRICS -->
+      <div class="detail-text-wrapper" style="flex: 1; padding-left: 40px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
         
-        <!-- Header with Logo (Left Aligned & Anchored) -->
-        <div class="acn-header" style="margin-bottom: 35px; opacity: 0; transform: translateY(20px); display: flex; flex-direction: column; align-items: flex-start; text-align: left; border-bottom: 2px solid rgba(26,54,38,0.1); padding-bottom: 20px;">
-          <img src="image_1868b9.png" alt="ACN Logo" style="height: 60px; margin-bottom: 12px;">
-          <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 3px;">India's First Broker Exchange</div>
+        <!-- Header with Logo (Left Aligned now) -->
+        <div class="acn-header" style="margin-bottom: 30px; opacity: 0; transform: translateY(20px); display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 100%; max-width: 420px;">
+          <img src="image_1868b9.png" alt="ACN Logo" style="height: 70px; margin-bottom: 15px;">
+          <div style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 2px;">India's First Broker Exchange</div>
+          <hr style="width: 100%; border: none; border-top: 1px solid rgba(26, 54, 38, 0.15); margin-top: 20px; margin-bottom: 0;">
         </div>
 
-        <!-- 3 Vertical Metric Cards -->
-        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 400px;">
+        <!-- 3 Vertical Metrics in Glassmorphism Boxes -->
+        <div style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; width: 100%;">
           
-          <div class="acn-metric-card" style="opacity: 0; transform: translateY(20px);">
-            <div class="acn-val">2,700+</div>
-            <div class="acn-lab">Verified Agents</div>
+          <div class="acn-metric acn-metric-box" style="opacity: 0; transform: translateY(20px);">
+            <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1;">2,700+</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-gold); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px;">Verified Agents</div>
           </div>
           
-          <div class="acn-metric-card" style="opacity: 0; transform: translateY(20px);">
-            <div class="acn-val">12,000+</div>
-            <div class="acn-lab">Resale Listings</div>
+          <div class="acn-metric acn-metric-box gold-border" style="opacity: 0; transform: translateY(20px);">
+            <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1;">12,000+</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-gold); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px;">Resale Listings</div>
           </div>
           
-          <div class="acn-metric-card" style="opacity: 0; transform: translateY(20px);">
-            <div class="acn-val">80+</div>
-            <div class="acn-lab">Deals / Month</div>
+          <div class="acn-metric acn-metric-box" style="opacity: 0; transform: translateY(20px);">
+            <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1;">80+</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-gold); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px;">Deals / Month</div>
           </div>
 
         </div>
@@ -233,8 +247,7 @@
       <!-- 1. Header (Logo + Descriptor) -->
       <div class="ad-header" style="text-align: center; opacity: 0; transform: translateY(20px);">
         <img src="image_18e47f.png" alt="alldoors logo" style="height: 65px; margin-bottom: 15px;">
-        <div class="brand-subtitle">Advisory-led primary real estate distribution at scale.</div>
-
+        <div style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 2px;">Advisory-led primary real estate distribution at scale.</div>
       </div>
 
       <!-- 2. Dynamic Bar Chart Wrapper -->
@@ -256,14 +269,14 @@
         </div>
         
         <div class="ad-metric" style="opacity: 0; transform: translateY(20px);">
-          <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1; margin-bottom: 10px;">10000+</div>
-          <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 1px;">Verified Homes</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1; margin-bottom: 10px;">200+</div>
+          <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 1px;">Builder Partnerships</div>
         </div>
         
         <div class="ad-metric" style="opacity: 0; transform: translateY(20px);">
           <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1; margin-bottom: 10px;">50+</div>
           <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 1px;">Sales Experts</div>
-          <div style="font-size: 0.8rem; color: rgba(26, 54, 38, 0.7); margin-top: 8px;"></div>
+          <div style="font-size: 0.8rem; color: rgba(26, 54, 38, 0.7); margin-top: 8px;">North, South & East Zones</div>
         </div>
 
       </div>
@@ -291,7 +304,7 @@
         <span class="modal-title">IQOL / Live Environment</span>
         <button class="close-modal-btn" id="btn-close-modal">Close Window ✕</button>
       </div>
-      <iframe src="https://acnonline.in/" class="live-website-frame"></iframe>
+      <iframe src="https://iqol.in/" class="live-website-frame"></iframe>
     </div>
   </div>
 
@@ -302,7 +315,7 @@
         <span class="modal-title">alldoors / Live Environment</span>
         <button class="close-modal-btn" id="btn-close-alldoors-modal">Close Window ✕</button>
       </div>
-      <iframe src="https://alldoors.in/" class="live-website-frame"></iframe>
+      <iframe src="https://iqol.in/" class="live-website-frame"></iframe>
     </div>
   </div>
 
@@ -327,15 +340,6 @@
       gsap.set("#btn-history, #btn-proposal", { autoAlpha: 1 });
       appState = 'hub';
     }
-
-    // --- ROLLING TEXT ANIMATION ---
-    const rollTl = gsap.timeline({ repeat: -1 });
-    rollTl.to(".w1", { y: "-100%", autoAlpha: 0, duration: 0.6, delay: 2, ease: "power2.inOut" })
-          .fromTo(".w2", { y: "100%", autoAlpha: 0 }, { y: "0%", autoAlpha: 1, duration: 0.6, ease: "power2.inOut" }, "<")
-          .to(".w2", { y: "-100%", autoAlpha: 0, duration: 0.6, delay: 2, ease: "power2.inOut" })
-          .fromTo(".w3", { y: "100%", autoAlpha: 0 }, { y: "0%", autoAlpha: 1, duration: 0.6, ease: "power2.inOut" }, "<")
-          .to(".w3", { y: "-100%", autoAlpha: 0, duration: 0.6, delay: 2, ease: "power2.inOut" })
-          .fromTo(".w1", { y: "100%", autoAlpha: 0 }, { y: "0%", autoAlpha: 1, duration: 0.6, ease: "power2.inOut" }, "<");
 
     function triggerOpening() { if (appState === 'init') mainTl.play(); }
     document.body.addEventListener("click", (e) => { 
@@ -623,6 +627,7 @@
     const cLine = '#1a3626'; const cFill = '#333333'; 
     let acnNode, cpNodes, acnTl;
 
+    // ---> NEW COORDINATE TRACKER <---
     acnCanvas.addEventListener('click', function(e) {
       if (appState !== 'acn-pitch') return;
       const rect = acnCanvas.getBoundingClientRect();
@@ -643,6 +648,7 @@
         alert(`Copied to clipboard!\n\n${snippet}\n\nPaste this directly into your cpNodes array.`);
       });
     });
+    // ---------------------------------
 
     function drawHexagon(x, y, radius) { acnCtx.beginPath(); for (let i = 0; i < 6; i++) { let angle = (Math.PI / 3) * i - (Math.PI / 2); let px = x + radius * Math.cos(angle); let py = y + radius * Math.sin(angle); if (i === 0) acnCtx.moveTo(px, py); else acnCtx.lineTo(px, py); } acnCtx.closePath(); }
     function drawUserIcon(x, y, radius) { acnCtx.fillStyle = cFill; acnCtx.beginPath(); acnCtx.arc(x, y - radius * 0.2, radius * 0.3, 0, Math.PI * 2); acnCtx.fill(); acnCtx.beginPath(); acnCtx.arc(x, y + radius * 0.6, radius * 0.5, Math.PI, 0); acnCtx.fill(); }
@@ -677,6 +683,7 @@
     }
     gsap.ticker.add(renderAcnFrame);
 
+    // PLACE YOUR CUSTOM MAP COORDINATES HERE
     function generateNetworkData() {
       acnNode = { x: 454, y: 396, size: 30, alpha: 0, scale: 0, lineProgress: 0 },
       cpNodes = [
@@ -732,6 +739,7 @@
       ];
     }
 
+
     function initAcnMap() {
       const dpr = window.devicePixelRatio || 1;
       acnCw = 950
@@ -756,13 +764,13 @@
       initAcnMap();
       const tl = gsap.timeline();
       tl.to(".acn-header", { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
-      tl.to(".acn-metric-card", { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: "power3.out" }, "-=0.4");
+      tl.to(".acn-metric", { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out" }, "-=0.4");
     }
 
     function resetAcnSimulation() { 
       if(acnTl) acnTl.kill(); 
       gsap.set(".acn-header", { y: 20, opacity: 0 });
-      gsap.set(".acn-metric-card", { y: 20, opacity: 0 });
+      gsap.set(".acn-metric", { y: 20, opacity: 0 });
     }
 
     // --- ALLDOORS DYNAMIC CHART ENGINE ---
@@ -777,7 +785,7 @@
         { month: 'APR', val: 17 },
         { month: 'MAY', val: 20 },
         { month: 'JUN', val: 25 },
-        { month: 'JUL', val: 20 }
+        { month: 'JUL', val: 10 }
       ];
       
       const maxVal = Math.max(...alldoorsData.map(d => d.val));
