@@ -27,10 +27,8 @@
     /* --- INTRO VIEW STYLES --- */
     #hero-logo { font-family: 'Playfair Display', serif; font-size: 9rem; font-weight: 700; color: var(--iqol-gold); letter-spacing: 6px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; z-index: 10; text-shadow: 1px 1px 0px var(--gold-3d-mid), 2px 2px 0px var(--gold-3d-mid), 3px 3px 0px var(--gold-3d-mid), 4px 4px 0px var(--gold-3d-dark), 5px 5px 0px var(--gold-3d-dark), 6px 6px 0px var(--gold-3d-dark), 8px 8px 15px rgba(0, 0, 0, 0.15); }
     
-    /* Subtitle moved to 110px */
     #hero-subtitle { position: absolute; top: calc(50% + 110px); left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-text-dark); letter-spacing: 3px; text-transform: uppercase; z-index: 10; white-space: nowrap; }
 
-    /* Rolling text kept at 155px */
     #rolling-text-container { position: absolute; top: calc(50% + 155px); left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 1.8rem; color: var(--iqol-text-dark); z-index: 10; display: flex; gap: 8px; align-items: center; }
     
     .spin-container {
@@ -79,7 +77,7 @@
     .back-btn { padding: 10px 20px; background: transparent; border: 1px solid var(--iqol-text-dark); color: var(--iqol-text-dark); border-radius: 30px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; transition: all 0.2s ease; }
     .back-btn:hover { background: var(--iqol-text-dark); color: var(--iqol-bg-color); }
     
-    .detail-container { display: flex; gap: 60px; max-width: 1300px; width: 100%; align-items: center; position: relative; }
+    .detail-container { display: flex; gap: 60px; max-width: 1300px; width: 100%; align-items: center; position: relative; z-index: 10; }
 
     .detail-image-wrapper { flex: 1.2; border-radius: 16px; overflow: hidden; padding: 0; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 500px; }
     
@@ -89,7 +87,6 @@
     .detail-text-wrapper { flex: 1; display: flex; flex-direction: column; gap: 20px; }
     .detail-text-wrapper h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; color: var(--iqol-text-dark); line-height: 1.1; }
 
-    /* --- UPDATED: ACN METRIC BOXES --- */
     .acn-metric-box {
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(15px);
@@ -106,8 +103,55 @@
       width: 100%;
       max-width: 420px;
     }
-    .acn-metric-box.gold-border {
-      border-left-color: var(--iqol-gold);
+    .acn-metric-box.gold-border { border-left-color: var(--iqol-gold); }
+
+    /* --- PURE CODE ACN BACKGROUND (HIGH VISIBILITY) --- */
+    .acn-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1; 
+      pointer-events: none;
+      opacity: 0; 
+      overflow: hidden;
+    }
+
+    @keyframes pingRadar {
+      0% { r: 0; opacity: 1; stroke-width: 4; }
+      100% { r: 150px; opacity: 0; stroke-width: 0.5; }
+    }
+
+    .radar-ping circle {
+      animation: pingRadar 3s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8);
+      transform-origin: center;
+    }
+    .radar-ping.delay-1 circle { animation-delay: 1s; }
+    .radar-ping.delay-2 circle { animation-delay: 2s; }
+
+    /* --- PURE CODE ALLDOORS BACKGROUND (HIGH VISIBILITY) --- */
+    .alldoors-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1; 
+      pointer-events: none;
+      opacity: 0; 
+      overflow: hidden;
+    }
+
+    @keyframes slowPan {
+      0% { transform: scale(1) translateX(0); }
+      50% { transform: scale(1.04) translateX(-15px); }
+      100% { transform: scale(1) translateX(0); }
+    }
+
+    .alldoors-bg svg {
+      animation: slowPan 25s infinite ease-in-out;
+      transform-origin: center center;
     }
 
     /* --- EVENT GALLERY VIEW --- */
@@ -170,7 +214,7 @@
     <div class="vertical-card" id="card-acn"><h2>ACN</h2></div>
     <div class="vertical-card" id="card-truestate"><h2>TruEstate</h2></div>
     <div class="vertical-card" id="card-vault" style="cursor: pointer; position: relative; z-index: 50;"><h2>Vault</h2></div>
-    <div class="vertical-card" id="card-masalai" style="cursor: pointer; position: relative; z-index: 50;"><h2>masal.ai</h2></div>
+    <div class="vertical-card" id="card-masalai" style="cursor: pointer; position: relative; z-index: 50;"><h2>MASAL.ai</h2></div>
   </div>
 
   <div id="nav-hint">Click or press Space to begin</div>
@@ -184,6 +228,61 @@
 
   <!-- REDESIGNED ACN PITCH VIEW -->
   <div id="acn-detail-view" class="detail-view">
+
+    <!-- ACN BACKGROUND: LIVE RADAR & NETWORK ROUTING (HIGH VISIBILITY) -->
+    <!-- ACN BACKGROUND: LIVE RADAR & NETWORK ROUTING (HIGH VISIBILITY) -->
+    <div class="acn-bg" id="anim-acn-bg">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width: 100%; height: 100%;">
+        <defs>
+          <!-- Bolder Coordinate Grid -->
+          <pattern id="acn-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(26, 54, 38, 0.08)" stroke-width="1.5"/>
+          </pattern>
+        </defs>
+
+        <!-- Base Grid -->
+        <rect width="100%" height="100%" fill="url(#acn-grid)" />
+
+        <!-- Network Connections (Bolder routing paths) -->
+        <g stroke="rgba(184, 151, 89, 0.4)" stroke-width="2.5" fill="none" stroke-dasharray="8 8">
+          <!-- Shifted the curve up to avoid the text -->
+          <path d="M 100 150 Q 600 50 1350 80 T 2000 100" />
+          <path d="M -50 850 Q 500 1000 1300 750 T 2000 950" />
+          <path d="M 1600 -50 L 1300 1200" opacity="0.8"/>
+          <path d="M 1850 1200 L 1650 -50" opacity="0.6"/>
+          <path d="M -100 300 Q 500 600 1000 50 L 1500 50" opacity="0.5"/>
+        </g>
+
+        <!-- Connecting Nodes (Highly visible Brokers) -->
+        <g fill="rgba(184, 151, 89, 0.8)">
+          <circle cx="100" cy="150" r="6" />
+          <circle cx="600" cy="115" r="5" />
+          <!-- Shifted this node up and right -->
+          <circle cx="1350" cy="80" r="8" />
+          <circle cx="1600" cy="165" r="6" />
+          <circle cx="500" cy="925" r="7" />
+          <circle cx="1300" cy="750" r="8" />
+          <circle cx="1650" cy="850" r="6" />
+          <circle cx="950" cy="80" r="5" />
+        </g>
+
+        <!-- Animated Radar Pings (Bolder lines and wider expansion) -->
+        <g fill="none" stroke="rgba(184, 151, 89, 0.8)" class="radar-ping">
+          <!-- Shifted this ping to match the node -->
+          <circle cx="1350" cy="80" />
+        </g>
+        <g fill="none" stroke="rgba(184, 151, 89, 0.8)" class="radar-ping delay-1">
+          <circle cx="1300" cy="750" />
+        </g>
+        <g fill="none" stroke="rgba(184, 151, 89, 0.8)" class="radar-ping delay-2">
+          <circle cx="600" cy="115" />
+        </g>
+        <g fill="none" stroke="rgba(184, 151, 89, 0.6)" class="radar-ping delay-1">
+          <circle cx="1600" cy="165" />
+        </g>
+      </svg>
+    </div>
+
     <div class="top-nav">
       <button class="back-btn" id="btn-launch-web">Launch Live Platform</button>
       <button class="back-btn" id="btn-back-acn">← Back to Hub</button>
@@ -203,31 +302,25 @@
       <!-- RIGHT: ACN LOGO & ZERO FLUFF METRICS -->
       <div class="detail-text-wrapper" style="flex: 1; padding-left: 40px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
         
-        <!-- Header with Logo (Left Aligned now) -->
         <div class="acn-header" style="margin-bottom: 30px; opacity: 0; transform: translateY(20px); display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 100%; max-width: 420px;">
           <img src="image_1868b9.png" alt="ACN Logo" style="height: 70px; margin-bottom: 15px;">
           <div style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 2px;">India's First Broker Exchange</div>
           <hr style="width: 100%; border: none; border-top: 1px solid rgba(26, 54, 38, 0.15); margin-top: 20px; margin-bottom: 0;">
         </div>
 
-        <!-- 3 Vertical Metrics in Glassmorphism Boxes -->
         <div style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; width: 100%;">
-          
           <div class="acn-metric acn-metric-box" style="opacity: 0; transform: translateY(20px);">
             <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1;">2,700+</div>
             <div style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-gold); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px;">Verified Agents</div>
           </div>
-          
           <div class="acn-metric acn-metric-box gold-border" style="opacity: 0; transform: translateY(20px);">
             <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1;">12,000+</div>
             <div style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-gold); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px;">Resale Listings</div>
           </div>
-          
           <div class="acn-metric acn-metric-box" style="opacity: 0; transform: translateY(20px);">
             <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--iqol-text-dark); font-weight: 700; line-height: 1;">80+</div>
             <div style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--iqol-gold); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.5px;">Deals / Month</div>
           </div>
-
         </div>
       </div>
     </div>
@@ -235,27 +328,55 @@
 
   <!-- TOP-TO-BOTTOM ALLDOORS PITCH VIEW (DYNAMIC BAR CHART) -->
   <div id="alldoors-detail-view" class="detail-view">
+
+    <!-- ALLDOORS BACKGROUND (HIGH VISIBILITY) -->
+    <div class="alldoors-bg" id="anim-alldoors-bg">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width: 100%; height: 100%;">
+        <defs>
+          <pattern id="arch-grid" width="100" height="100" patternUnits="userSpaceOnUse">
+            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(26, 54, 38, 0.08)" stroke-width="1.5"/>
+          </pattern>
+        </defs>
+        
+        <rect width="100%" height="100%" fill="url(#arch-grid)" />
+
+        <g stroke="rgba(184, 151, 89, 0.3)" stroke-width="2" fill="none">
+          <line x1="0" y1="400" x2="1920" y2="400" stroke-dasharray="15 15" />
+          <line x1="0" y1="750" x2="1920" y2="750" stroke-dasharray="5 20" />
+        </g>
+
+        <g stroke="rgba(26, 54, 38, 0.2)" stroke-width="4" fill="none">
+          <rect x="-100" y="150" width="350" height="700" />
+          <polygon points="250,150 450,100 450,800 250,850" fill="rgba(184, 151, 89, 0.08)" stroke="rgba(184, 151, 89, 0.3)"/>
+          <rect x="50" y="250" width="200" height="500" stroke-width="2"/>
+          <polygon points="250,250 350,220 350,680 250,750" fill="rgba(26, 54, 38, 0.06)" stroke-width="2"/>
+        </g>
+
+        <g stroke="rgba(26, 54, 38, 0.15)" stroke-width="3" fill="none">
+          <rect x="1550" y="200" width="400" height="600" />
+          <polygon points="1550,200 1350,160 1350,760 1550,800" fill="rgba(184, 151, 89, 0.06)" stroke="rgba(184, 151, 89, 0.25)"/>
+          <rect x="1700" y="350" width="150" height="350" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
     
-    <div class="top-nav">
+    <div class="top-nav" style="z-index: 50;">
       <button class="back-btn" id="btn-launch-alldoors-web">Launch Live Platform</button>
       <button class="back-btn" id="btn-back-alldoors">← Back to Hub</button>
     </div>
 
     <!-- Centered Vertical Content Container -->
-    <div class="alldoors-content" style="width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; padding-top: 40px;">
+    <div class="alldoors-content" style="width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; padding-top: 40px; position: relative; z-index: 10;">
       
-      <!-- 1. Header (Logo + Descriptor) -->
       <div class="ad-header" style="text-align: center; opacity: 0; transform: translateY(20px);">
         <img src="image_18e47f.png" alt="alldoors logo" style="height: 65px; margin-bottom: 15px;">
         <div style="font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--iqol-gold); text-transform: uppercase; letter-spacing: 2px;">Advisory-led primary real estate distribution at scale.</div>
       </div>
 
-      <!-- 2. Dynamic Bar Chart Wrapper -->
       <div class="ad-chart-wrapper" style="flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 40px 40px 40px; border-bottom: 2px solid rgba(26, 54, 38, 0.2); margin: 30px 0; position: relative; min-height: 250px;">
           <!-- JavaScript will dynamically inject the chart columns here -->
       </div>
 
-      <!-- 3. Four-Pillar Footer Grid -->
       <div class="ad-metrics-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; width: 100%; text-align: center; margin-bottom: 20px;">
         
         <div class="ad-metric" style="opacity: 0; transform: translateY(20px);">
@@ -371,63 +492,43 @@
       }});
     });
 
-    // --- TRUESTATE REDIRECT ---
     const truestateCard = document.getElementById('card-truestate');
     if (truestateCard) {
       truestateCard.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        if (appState !== 'hub') return; 
-        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
-          window.location.href = "truestate.html";
-        }});
+        e.stopPropagation(); if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => window.location.href = "truestate.html" });
       });
     }
 
-    // --- VAULT REDIRECT ---
     const vaultCard = document.getElementById('card-vault');
     if (vaultCard) {
       vaultCard.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        if (appState !== 'hub') return; 
-        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
-          window.location.href = "vault.html";
-        }});
+        e.stopPropagation(); if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => window.location.href = "vault.html" });
       });
     }
 
-    // --- MASAL.AI REDIRECT ---
     const masalaiCard = document.getElementById('card-masalai');
     if (masalaiCard) {
       masalaiCard.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        if (appState !== 'hub') return; 
-        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
-          window.location.href = "masalai.html";
-        }});
+        e.stopPropagation(); if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => window.location.href = "masalai.html" });
       });
     }
 
-    // --- HISTORY REDIRECT ---
     const historyBtn = document.getElementById('btn-history');
     if (historyBtn) {
       historyBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        if (appState !== 'hub') return; 
-        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
-          window.location.href = "history.html";
-        }});
+        e.stopPropagation(); if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => window.location.href = "history.html" });
       });
     }
 
-    // --- PROPOSAL REDIRECT ---
     const proposalBtn = document.getElementById('btn-proposal');
     if (proposalBtn) {
       proposalBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        if (appState !== 'hub') return; 
-        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => {
-          window.location.href = "proposal.html";
-        }});
+        e.stopPropagation(); if (appState !== 'hub') return; 
+        gsap.to(hubElements, { opacity: 0, duration: 0.4, onComplete: () => window.location.href = "proposal.html" });
       });
     }
 
@@ -486,9 +587,7 @@
             opacity: 1,
             duration: 0.4,
             ease: "power2.inOut",
-            onComplete: () => {
-              window.location.href = "truestate.html";
-            }
+            onComplete: () => window.location.href = "truestate.html"
           });
         }
         else if (appState === 'acn-gallery') nextGalleryItem();
@@ -531,15 +630,13 @@
             opacity: 1,
             duration: 0.4,
             ease: "power2.inOut",
-            onComplete: () => {
-              window.location.href = "history.html";
-            }
+            onComplete: () => window.location.href = "history.html"
           });
         }
       }
     });
 
-    // --- ACN WEBSITE MODAL ---
+    // --- MODALS ---
     document.getElementById('btn-launch-web').addEventListener('click', () => {
       appState = 'modal';
       gsap.set("#web-modal", { display: "flex", autoAlpha: 0 });
@@ -556,10 +653,8 @@
       }});
     });
 
-    // --- ALLDOORS WEBSITE MODAL ---
     const launchAlldoorsWeb = document.getElementById('btn-launch-alldoors-web');
     const closeAlldoorsModal = document.getElementById('btn-close-alldoors-modal');
-    
     if (launchAlldoorsWeb) {
       launchAlldoorsWeb.addEventListener('click', () => {
         appState = 'modal';
@@ -620,35 +715,12 @@
     function prevGalleryItem() { switchMedia((currentMediaIndex - 1 + acnMedia.length) % acnMedia.length); }
     buildGallery();
 
-    // --- ACN CANVAS ENGINE ---
+    // --- ACN CANVAS & MAP ENGINE ---
     const acnCanvas = document.getElementById('acn-network-canvas'); 
     const acnCtx = acnCanvas.getContext('2d');
     let acnCw, acnCh;
     const cLine = '#1a3626'; const cFill = '#333333'; 
     let acnNode, cpNodes, acnTl;
-
-    // ---> NEW COORDINATE TRACKER <---
-    acnCanvas.addEventListener('click', function(e) {
-      if (appState !== 'acn-pitch') return;
-      const rect = acnCanvas.getBoundingClientRect();
-      const scaleX = acnCw / rect.width;
-      const scaleY = acnCh / rect.height;
-      const x = Math.round((e.clientX - rect.left) * scaleX);
-      const y = Math.round((e.clientY - rect.top) * scaleY);
-      
-      const snippet = `{ x: ${x}, y: ${y}, size: 10, alpha: 0, scale: 0, lineProgress: 0 },`;
-      console.log("Node coordinates:", snippet);
-      
-      acnCtx.fillStyle = '#ff0000';
-      acnCtx.beginPath();
-      acnCtx.arc(x, y, 6, 0, Math.PI * 2);
-      acnCtx.fill();
-      
-      navigator.clipboard.writeText(snippet).then(() => {
-        alert(`Copied to clipboard!\n\n${snippet}\n\nPaste this directly into your cpNodes array.`);
-      });
-    });
-    // ---------------------------------
 
     function drawHexagon(x, y, radius) { acnCtx.beginPath(); for (let i = 0; i < 6; i++) { let angle = (Math.PI / 3) * i - (Math.PI / 2); let px = x + radius * Math.cos(angle); let py = y + radius * Math.sin(angle); if (i === 0) acnCtx.moveTo(px, py); else acnCtx.lineTo(px, py); } acnCtx.closePath(); }
     function drawUserIcon(x, y, radius) { acnCtx.fillStyle = cFill; acnCtx.beginPath(); acnCtx.arc(x, y - radius * 0.2, radius * 0.3, 0, Math.PI * 2); acnCtx.fill(); acnCtx.beginPath(); acnCtx.arc(x, y + radius * 0.6, radius * 0.5, Math.PI, 0); acnCtx.fill(); }
@@ -683,9 +755,9 @@
     }
     gsap.ticker.add(renderAcnFrame);
 
-    // PLACE YOUR CUSTOM MAP COORDINATES HERE
+    // EXACT CUSTOM MAP COORDINATES
     function generateNetworkData() {
-      acnNode = { x: 454, y: 396, size: 30, alpha: 0, scale: 0, lineProgress: 0 },
+      acnNode = { x: 454, y: 396, size: 30, alpha: 0, scale: 0, lineProgress: 0 };
       cpNodes = [
         { x: 729, y: 468, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
         { x: 614, y: 299, size: 10, alpha: 0, scale: 0, lineProgress: 0 },
@@ -739,7 +811,6 @@
       ];
     }
 
-
     function initAcnMap() {
       const dpr = window.devicePixelRatio || 1;
       acnCw = 950
@@ -763,12 +834,14 @@
     function startAcnSimulation() {
       initAcnMap();
       const tl = gsap.timeline();
-      tl.to(".acn-header", { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+      tl.to("#anim-acn-bg", { opacity: 1, duration: 1.2, ease: "power2.out" }); // Fade in ACN Background
+      tl.to(".acn-header", { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.8");
       tl.to(".acn-metric", { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out" }, "-=0.4");
     }
 
     function resetAcnSimulation() { 
       if(acnTl) acnTl.kill(); 
+      gsap.set("#anim-acn-bg", { opacity: 0 }); // Hide ACN Background
       gsap.set(".acn-header", { y: 20, opacity: 0 });
       gsap.set(".acn-metric", { y: 20, opacity: 0 });
     }
@@ -842,13 +915,16 @@
     function startAlldoorsSimulation() {
       buildAlldoorsChart();
       const tl = gsap.timeline();
-      tl.to(".ad-header", { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+      // Animate the background first
+      tl.to("#anim-alldoors-bg", { opacity: 1, duration: 1.2, ease: "power2.out" });
+      tl.to(".ad-header", { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.8");
       tl.to(".ad-bar", { scaleY: 1, duration: 0.8, stagger: 0.1, ease: "back.out(1.5)" }, "-=0.4");
       tl.to(".ad-val-label", { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.6");
       tl.to(".ad-metric", { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out" }, "-=0.2");
     }
 
     function resetAlldoorsSimulation() {
+      gsap.set("#anim-alldoors-bg", { opacity: 0 }); // Hide background again
       gsap.set(".ad-header", { y: 20, opacity: 0 });
       gsap.set(".ad-bar", { scaleY: 0 });
       gsap.set(".ad-val-label", { y: 10, opacity: 0 });
@@ -857,7 +933,6 @@
 
     // Check if URL requests opening a specific vertical directly
     const urlParams = new URLSearchParams(window.location.search);
-    
     if (urlParams.get('open') === 'alldoors') {
       mainTl.progress(1);
       appState = 'alldoors-pitch';
