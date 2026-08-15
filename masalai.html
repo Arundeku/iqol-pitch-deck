@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MASAL.ai — IQOL</title>
+  <title>Masal.ai — IQOL</title>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   
@@ -45,7 +45,7 @@
       pointer-events: none;
     }
 
-    /* --- TOP NAV BUTTONS (Restored to Transparent) --- */
+    /* --- TOP NAV BUTTONS --- */
     .top-nav {
       position: absolute;
       top: 30px;
@@ -339,14 +339,14 @@
 
   <div class="top-nav">
     <button class="back-btn" id="btn-launch-web">Launch Live Platform</button>
-    
+    <a href="index.html?state=hub" class="back-btn" id="btn-back-hub">← Back to Hub</a>
   </div>
 
   <div class="detail-container">
     
     <!-- CENTER HEADER -->
     <div class="masal-header-center" id="anim-header">
-      <h1>MASAL.ai</h1>
+      <h1>Masal.ai</h1>
       <p>AI Infrastructure & Automated Funnels</p>
     </div>
 
@@ -367,7 +367,6 @@
 
         <div class="action-row">
           <button class="action-btn" onclick="openCalcModal()">Compare Costs</button>
-          <!-- Opens in a new tab to bypass iframe blocks -->
           <button class="action-btn" onclick="window.open('https://iqol-marketing.el.r.appspot.com/', '_blank')">Give Demo</button>
         </div>
       </div>
@@ -385,7 +384,6 @@
         </div>
 
         <div class="action-row">
-          <!-- Opens in a new tab to bypass iframe blocks -->
           <button class="action-btn" onclick="window.open('https://masal.ai/', '_blank')">Give Demo</button>
         </div>
       </div>
@@ -449,7 +447,6 @@
         <span class="modal-title" style="color: var(--iqol-gold); font-weight: 600;" id="modal-title-text">Masal.ai / Live Environment</span>
         <button id="btn-close-modal">Close Window ✕</button>
       </div>
-      <!-- URL is now dynamically injected via Javascript -->
       <iframe src="" class="live-website-frame" style="width: 100%; height: calc(100% - 60px); border: none;"></iframe>
     </div>
   </div>
@@ -471,6 +468,15 @@
           duration: 0.4,
           ease: "power2.inOut",
           onComplete: () => window.location.href = targetUrl
+        });
+      }
+
+      // Intercept Back to Hub button for smooth transition
+      const backHubBtn = document.getElementById('btn-back-hub');
+      if (backHubBtn) {
+        backHubBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          smoothNavigate(backHubBtn.getAttribute('href'));
         });
       }
 
