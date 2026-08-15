@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vault PropTech — IQOL</title>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --iqol-bg-color: #F5EAE0; 
+      --iqol-text-dark: #1a3626; 
+      --iqol-gold: #b89759;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--iqol-bg-color);
+      color: var(--iqol-text-dark);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    #fade-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--iqol-bg-color);
+      z-index: 9999;
+      opacity: 1; 
+      pointer-events: none;
+    }
+
+    .top-nav {
+      position: absolute;
+      top: 40px;
+      right: 60px;
+      z-index: 50;
+      display: flex;
+      gap: 15px;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--iqol-text-dark);
+      color: var(--iqol-text-dark);
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-btn:hover {
+      background: var(--iqol-text-dark);
+      color: var(--iqol-bg-color);
+    }
+
+    /* --- MASTER LAYOUT --- */
+    .detail-container {
+      display: grid;
+      /* Balanced ratio to give left side breathing room while right side stays large */
+      grid-template-columns: 0.95fr 1.1fr;
+      gap: 80px;
+      max-width: 1500px;
+      width: 100%;
+      align-items: center;
+      padding: 40px 60px;
+      box-sizing: border-box;
+    }
+
+    /* --- LEFT SIDE: FULL HEIGHT 2-COLUMN MARQUEE --- */
+    .vault-services-left {
+      display: flex;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      height: 560px;
+      width: 100%; /* Restored to full column width */
+      overflow: hidden;
+      mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    }
+
+    .service-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .col-up { animation: scrollUp 22s linear infinite; }
+    .col-down { animation: scrollDown 25s linear infinite; }
+
+    @keyframes scrollUp {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    @keyframes scrollDown {
+      0% { transform: translateY(-50%); }
+      100% { transform: translateY(0); }
+    }
+
+    .service-capsule {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 18px 20px; /* Increased padding to look plumper */
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--iqol-text-dark);
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(26,54,38,0.03);
+      white-space: nowrap;
+    }
+
+    /* --- RIGHT SIDE: LOGO, METRICS & HOOK --- */
+    .vault-info-right {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .brand-header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .brand-header img {
+      height: 110px; 
+      object-fit: contain;
+      align-self: flex-start;
+    }
+
+    .brand-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem; 
+      font-weight: 600;
+      color: var(--iqol-gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .scale-card-clean {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      padding: 40px 20px; 
+      box-shadow: 0 10px 30px rgba(26, 54, 38, 0.04);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+    }
+
+    .scale-stat-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+
+    .scale-stat-block:not(:last-child):after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: rgba(184, 151, 89, 0.3);
+    }
+
+    .scale-stat-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem; 
+      color: var(--iqol-text-dark);
+      margin: 0;
+      line-height: 1;
+    }
+
+    .scale-stat-block p {
+      margin: 12px 0 0 0; 
+      font-size: 0.95rem; 
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--iqol-gold);
+      font-weight: 700;
+    }
+
+    .hook-badge-clean {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(184, 151, 89, 0.4);
+      border-left: 5px solid var(--iqol-gold);
+      border-radius: 0 16px 16px 0;
+      padding: 24px 30px; 
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; 
+      color: var(--iqol-text-dark);
+      font-weight: 700;
+      box-shadow: 0 10px 20px rgba(26, 54, 38, 0.03);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fade-overlay"></div>
+
+  <div class="top-nav">
+    <button class="back-btn" id="btn-launch-web">Launch Live Platform</button>
+    <a href="index.html?state=hub" class="back-btn">← Back to Hub</a>
+  </div>
+
+  <div class="detail-container">
+    
+    <!-- LEFT SIDE: 2-COLUMN FULL HEIGHT MARQUEE -->
+    <div class="vault-services-left" id="anim-left">
+      <!-- Column 1 -->
+      <div class="service-column col-up">
+        <div class="service-capsule">Due Diligence</div>
+        <div class="service-capsule">Property Conveyancing</div>
+        <div class="service-capsule">Encumbrance Certificate</div>
+        <div class="service-capsule">MODT Cancellation</div>
+        <div class="service-capsule">E-Khata</div>
+        <div class="service-capsule">Registry of Property</div>
+        <div class="service-capsule">Due Diligence</div>
+        <div class="service-capsule">Property Conveyancing</div>
+        <div class="service-capsule">Encumbrance Certificate</div>
+        <div class="service-capsule">MODT Cancellation</div>
+        <div class="service-capsule">E-Khata</div>
+        <div class="service-capsule">Registry of Property</div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="service-column col-down">
+        <div class="service-capsule">Legal Consultation</div>
+        <div class="service-capsule">MOU Drafting</div>
+        <div class="service-capsule">TDS (Form 26QB)</div>
+        <div class="service-capsule">Panchayat Khata</div>
+        <div class="service-capsule">Khata Transfer</div>
+        <div class="service-capsule">Deed Drafting</div>
+        <div class="service-capsule">Legal Consultation</div>
+        <div class="service-capsule">MOU Drafting</div>
+        <div class="service-capsule">TDS (Form 26QB)</div>
+        <div class="service-capsule">Panchayat Khata</div>
+        <div class="service-capsule">Khata Transfer</div>
+        <div class="service-capsule">Deed Drafting</div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: LOGO, DESCRIPTION, METRICS & HOOK -->
+    <div class="vault-info-right" id="anim-right">
+      <div class="brand-header">
+        <img src="image_0a5136.png" alt="Vault Logo">
+        <div class="brand-subtitle">End-to-end legal documentation</div>
+      </div>
+
+      <div class="scale-card-clean">
+        <div class="scale-stat-block">
+          <h3>15,500+</h3>
+          <p>Properties Serviced</p>
+        </div>
+        <div class="scale-stat-block">
+          <h3>15,000+</h3>
+          <p>Trusted Customers</p>
+        </div>
+      </div>
+
+      <div class="hook-badge-clean">
+        5+ developers have onboarded Vault as their in-house legal partner for zero post-sale friction.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- WEB MODAL -->
+  <div id="web-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(26, 54, 38, 0.7); backdrop-filter: blur(20px); z-index: 100; display: none; opacity: 0; justify-content: center; align-items: center;">
+    <div class="modal-content" style="width: 90vw; height: 90vh; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.4); transform: scale(0.95);">
+      <div class="modal-header" style="height: 60px; background: var(--iqol-text-dark); display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+        <span class="modal-title" style="color: var(--iqol-gold); font-weight: 600;">Vault PropTech / Live Environment</span>
+        <button class="close-modal-btn" id="btn-close-modal" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 30px; padding: 6px 16px; cursor: pointer;">Close Window ✕</button>
+      </div>
+      <iframe src="https://www.vaultproptech.com/" class="live-website-frame" style="width: 100%; height: calc(100% - 60px); border: none;"></iframe>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Fade out overlay
+      gsap.to("#fade-overlay", { opacity: 0, duration: 0.4, ease: "power2.inOut" });
+
+      // 2. Entrance Animation
+      const tl = gsap.timeline({ delay: 0.1 });
+      tl.to("#anim-left", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" })
+        .to("#anim-right", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.6");
+
+      // 3. Smooth Navigation
+      function smoothNavigate(targetUrl) {
+        gsap.to("#fade-overlay", {
+          opacity: 1,
+          duration: 0.4,
+          ease: "power2.inOut",
+          onComplete: () => window.location.href = targetUrl
+        });
+      }
+
+      // Modal Logic
+      const launchWebBtn = document.getElementById('btn-launch-web');
+      const closeModalBtn = document.getElementById('btn-close-modal');
+      const webModal = document.getElementById('web-modal');
+      const modalBox = document.querySelector('.modal-content');
+
+      if (launchWebBtn) {
+        launchWebBtn.addEventListener('click', () => {
+          webModal.style.display = "flex";
+          gsap.to(webModal, { opacity: 1, duration: 0.3 });
+          gsap.to(modalBox, { scale: 1, duration: 0.4, ease: "power3.out" });
+        });
+      }
+
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+          gsap.to(modalBox, { scale: 0.95, duration: 0.3, ease: "power2.in" });
+          gsap.to(webModal, { opacity: 0, duration: 0.3, onComplete: () => webModal.style.display = "none" });
+        });
+      }
+
+      // Keyboard Arrow Navigation
+      window.addEventListener("keydown", (e) => {
+        if (webModal.style.display === "flex") return;
+
+        if (e.code === "ArrowLeft") {
+          smoothNavigate('truestate.html'); 
+        } else if (e.code === "ArrowRight") {
+          smoothNavigate('masalai.html'); 
+        }
+      });
+    });
+  </script>
+</body>
+</html>

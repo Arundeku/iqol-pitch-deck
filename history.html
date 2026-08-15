@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our History — IQOL</title>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600;1,700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --iqol-bg-color: #F5EAE0; 
+      --iqol-text-dark: #1a3626; 
+      --iqol-gold: #b89759;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--iqol-bg-color);
+      color: var(--iqol-text-dark);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    #fade-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--iqol-bg-color);
+      z-index: 9999;
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    .top-nav {
+      position: absolute;
+      top: 40px;
+      right: 60px;
+      z-index: 100;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--iqol-text-dark);
+      color: var(--iqol-text-dark);
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-btn:hover {
+      background: var(--iqol-text-dark);
+      color: var(--iqol-bg-color);
+    }
+
+    .slide-content {
+      width: 95%;
+      max-width: 1500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: -30vh; /* Lifts the heading and timeline up */
+    }
+
+    .history-timeline-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .timeline-track-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(184, 151, 89, 0.2), var(--iqol-gold), rgba(184, 151, 89, 0.2));
+      transform: translateY(-50%);
+    }
+
+    .timeline-node {
+      position: relative;
+      width: 16.66%; 
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .node-dot {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      background: var(--iqol-bg-color);
+      border: 3px solid var(--iqol-text-dark);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(184, 151, 89, 0.2);
+      z-index: 3;
+    }
+
+    .node-stem {
+      position: absolute;
+      width: 2px;
+      background: var(--iqol-gold);
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.5;
+    }
+
+    .node-stem.top {
+      bottom: 50%;
+      height: 30px;
+      transform-origin: bottom;
+    }
+
+    .node-stem.bottom {
+      top: 50%;
+      height: 30px;
+      transform-origin: top;
+    }
+
+    .node-content {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+    }
+
+    .node-content.top {
+      bottom: 50%;
+      margin-bottom: 45px;
+    }
+
+    .node-content.bottom {
+      top: 50%;
+      margin-top: 45px;
+    }
+
+    .node-date {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--iqol-gold);
+      font-weight: 700;
+    }
+
+    .node-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--iqol-text-dark);
+      line-height: 1.2;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fade-overlay"></div>
+
+  <div class="top-nav">
+    <a href="index.html?state=hub" class="back-btn">← Back to Hub</a>
+  </div>
+
+  <div class="slide-content">
+    <h2 id="history-header" style="font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--iqol-text-dark); font-weight: 600; margin-bottom: 80px;">Our Growth Trajectory</h2>
+
+    <div class="history-timeline-container">
+      <div class="timeline-track-line"></div>
+
+      <!-- Node 1 (Top) -->
+      <div class="timeline-node">
+        <div class="node-stem top"></div>
+        <div class="node-content top">
+          <div class="node-title">TruEstate<br>Launched</div>
+          <div class="node-date" style="margin-top: 8px;">Nov 2023</div>
+        </div>
+        <div class="node-dot"></div>
+      </div>
+
+      <!-- Node 2 (Bottom) -->
+      <div class="timeline-node">
+        <div class="node-dot"></div>
+        <div class="node-stem bottom"></div>
+        <div class="node-content bottom">
+          <div class="node-date" style="margin-bottom: 8px;">Aug 2024</div>
+          <div class="node-title">ACN<br>Launched</div>
+        </div>
+      </div>
+
+      <!-- Node 3 (Top) -->
+      <div class="timeline-node">
+        <div class="node-stem top"></div>
+        <div class="node-content top">
+          <div class="node-title">Canvas Homes<br>Live</div>
+          <div class="node-date" style="margin-top: 8px;">Jan 2025</div>
+        </div>
+        <div class="node-dot"></div>
+      </div>
+
+      <!-- Node 4 (Bottom) -->
+      <div class="timeline-node">
+        <div class="node-dot"></div>
+        <div class="node-stem bottom"></div>
+        <div class="node-content bottom">
+          <div class="node-date" style="margin-bottom: 8px;">Feb 2025</div>
+          <div class="node-title">Vault<br>Deployed</div>
+        </div>
+      </div>
+
+      <!-- Node 5 (Top) -->
+      <div class="timeline-node">
+        <div class="node-stem top"></div>
+        <div class="node-content top">
+          <div class="node-title">alldoors<br>Rebrand</div>
+          <div class="node-date" style="margin-top: 8px;">Jun 2026</div>
+        </div>
+        <div class="node-dot"></div>
+      </div>
+
+      <!-- Node 6 (Bottom) - MASAL.AI -->
+      <div class="timeline-node">
+        <div class="node-dot"></div>
+        <div class="node-stem bottom"></div>
+        <div class="node-content bottom">
+          <div class="node-date" style="margin-bottom: 8px;">Aug 2026</div>
+          <div class="node-title">masal.ai<br>Launched</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.to("#fade-overlay", { opacity: 0, duration: 0.4, ease: "power2.inOut" });
+
+      const tl = gsap.timeline({ delay: 0.2 });
+      
+      tl.from("#history-header", { opacity: 0, y: -20, duration: 0.8, ease: "power2.out" })
+        .from(".timeline-track-line", { scaleX: 0, transformOrigin: "left", duration: 1.2, ease: "power3.out" }, "-=0.4")
+        .from(".node-dot", { opacity: 0, scale: 0, duration: 0.4, stagger: 0.1, ease: "back.out(2)" }, "-=0.6")
+        .from(".node-stem", { scaleY: 0, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.4")
+        .from(".node-content.top", { opacity: 0, y: 15, duration: 0.5, stagger: 0.1, ease: "power2.out" }, "-=0.3")
+        .from(".node-content.bottom", { opacity: 0, y: -15, duration: 0.5, stagger: 0.1, ease: "power2.out" }, "-=0.7");
+
+      function smoothNavigate(targetUrl) {
+        gsap.to("#fade-overlay", {
+          opacity: 1,
+          duration: 0.4,
+          ease: "power2.inOut",
+          onComplete: () => {
+            window.location.href = targetUrl;
+          }
+        });
+      }
+
+      const topBackBtn = document.querySelector('.top-nav .back-btn');
+      if (topBackBtn) {
+        topBackBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          smoothNavigate(topBackBtn.getAttribute('href'));
+        });
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (e.code === "ArrowLeft") {
+          smoothNavigate('index.html?state=hub');
+        } else if (e.code === "ArrowRight" || e.code === "Space") {
+          // Navigates to index and automatically triggers the alldoors animation
+          smoothNavigate('index.html?open=alldoors'); 
+        }
+      });
+    });
+  </script>
+</body>
+</html>

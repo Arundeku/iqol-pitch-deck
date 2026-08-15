@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TruEstate — IQOL</title>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --iqol-bg-color: #F5EAE0; 
+      --iqol-text-dark: #1a3626; 
+      --iqol-gold: #b89759;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--iqol-bg-color);
+      color: var(--iqol-text-dark);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    #fade-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--iqol-bg-color);
+      z-index: 9999;
+      opacity: 1; 
+      pointer-events: none;
+    }
+
+    .top-nav {
+      position: absolute;
+      top: 40px;
+      right: 60px;
+      z-index: 50;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--iqol-text-dark);
+      color: var(--iqol-text-dark);
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-btn:hover {
+      background: var(--iqol-text-dark);
+      color: var(--iqol-bg-color);
+    }
+
+    .detail-container {
+      display: flex;
+      gap: 60px;
+      max-width: 1400px;
+      width: 100%;
+      align-items: center;
+      padding: 40px 60px;
+      box-sizing: border-box;
+    }
+
+    /* --- LEFT SIDE: ENGINE METRICS --- */
+    .intelligence-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .brand-header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .brand-header img {
+      height: 90px;
+      object-fit: contain;
+      align-self: flex-start;
+    }
+
+    .brand-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--iqol-gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .database-circle {
+      width: 100%;
+      max-width: 420px;
+      background: var(--iqol-text-dark);
+      border-radius: 20px;
+      padding: 30px;
+      box-sizing: border-box;
+      color: #fff;
+      box-shadow: 0 20px 40px rgba(26, 54, 38, 0.2);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .database-circle h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      color: var(--iqol-gold);
+      margin: 0;
+      line-height: 1;
+    }
+
+    .database-circle p {
+      margin: 10px 0 0 0;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .metrics-subgrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      max-width: 420px;
+    }
+
+    .sub-metric-card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 18px 10px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+    }
+
+    .sub-metric-card .stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--iqol-text-dark);
+      font-weight: 700;
+      margin: 0 0 5px 0;
+      line-height: 1;
+    }
+
+    .sub-metric-card .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--iqol-gold);
+      font-weight: 700;
+      margin: 0;
+    }
+
+
+    /* --- RIGHT SIDE: PLAN D EXECUTIVE PILLARS (ZERO PARAGRAPHS) --- */
+    .intelligence-right {
+      flex: 1.3;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--iqol-text-dark);
+      margin: 0 0 10px 0;
+    }
+
+    .executive-card {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-left: 5px solid var(--iqol-text-dark);
+      padding: 22px 28px;
+      border-radius: 0 12px 12px 0;
+      box-shadow: 0 10px 25px rgba(26, 54, 38, 0.04);
+      transition: all 0.3s ease;
+    }
+
+    .executive-card:hover {
+      background: rgba(255, 255, 255, 0.9);
+      border-left-color: var(--iqol-gold);
+      transform: translateX(5px);
+      box-shadow: 0 15px 30px rgba(26, 54, 38, 0.08);
+    }
+
+    .executive-card h4 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--iqol-text-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fade-overlay"></div>
+
+  <div class="top-nav">
+    <a href="index.html?state=hub" class="back-btn">← Back to Hub</a>
+  </div>
+
+  <div class="detail-container">
+    
+    <!-- LEFT SIDE: METRICS -->
+    <div class="intelligence-left">
+      
+      <div class="brand-header" id="anim-header">
+        <img src="image_0b31d6.png" alt="TruEstate Logo">
+        <div class="brand-subtitle">Pricing & Intelligence Layer</div>
+      </div>
+
+      <div class="database-circle" id="anim-circle">
+        <h2>10,000+</h2>
+        <p>Projects in database powering pricing, positioning & investing decisions with absolute precision.</p>
+      </div>
+
+      <div class="metrics-subgrid" id="anim-subgrid">
+        <div class="sub-metric-card">
+          <div class="stat">4,500+</div>
+          <div class="label">Auctions</div>
+        </div>
+        <div class="sub-metric-card">
+          <div class="stat">1,500+</div>
+          <div class="label">Valuations</div>
+        </div>
+        <div class="sub-metric-card">
+          <div class="stat">80+</div>
+          <div class="label">Factors</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE: EXECUTIVE MINIMALIST CARDS (PLAN D) -->
+    <div class="intelligence-right" id="anim-right">
+      <h3 class="section-title">What TruEstate Delivers</h3>
+      
+      <div class="executive-card">
+        <h4>Micro-Market Price Benchmarking</h4>
+      </div>
+
+      <div class="executive-card">
+        <h4>Data-Backed Investment Positioning</h4>
+      </div>
+
+      <div class="executive-card">
+        <h4>Project & Developer Due Diligence</h4>
+      </div>
+
+      <div class="executive-card">
+        <h4>Competitive Market Insights</h4>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Fade out overlay
+      gsap.to("#fade-overlay", { opacity: 0, duration: 0.4, ease: "power2.inOut" });
+
+      // 2. Coordinated Entrance Sequence
+      const tl = gsap.timeline({ delay: 0.1 });
+      tl.to("#anim-header", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
+        .to("#anim-circle", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.4")
+        .to("#anim-subgrid", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.4")
+        .to("#anim-right", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.5");
+
+      // 3. Smooth Navigation
+      function smoothNavigate(targetUrl) {
+        gsap.to("#fade-overlay", {
+          opacity: 1,
+          duration: 0.4,
+          ease: "power2.inOut",
+          onComplete: () => window.location.href = targetUrl
+        });
+      }
+
+      const backBtn = document.querySelector('.back-btn');
+      if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+          e.preventDefault(); 
+          smoothNavigate(backBtn.getAttribute('href'));
+        });
+      }
+
+      // Keyboard Arrow Navigation
+      window.addEventListener("keydown", (e) => {
+        if (e.code === "ArrowLeft") {
+          // Changed from 'acn.html' to correctly open ACN in the main index hub
+          smoothNavigate('index.html?open=acn'); 
+        } else if (e.code === "ArrowRight") {
+          smoothNavigate('vault.html'); 
+        }
+      });
+    });
+  </script>
+</body>
+</html>
