@@ -263,7 +263,7 @@
       const tl = gsap.timeline({ delay: 0.2 });
       
       tl.from("#history-header", { opacity: 0, y: -20, duration: 0.8, ease: "power2.out" })
-        .from(".timeline-track-line", { scaleX: 0, transformOrigin: "left", duration: 0.8, ease: "power3.out" }, "-=0.4")
+        .from(".timeline-track-line", { scaleX: 0, transformOrigin: "left", duration: 0.5, ease: "power3.out" }, "-=0.4")
         .from(".node-dot", { opacity: 0, scale: 0, duration: 0.4, stagger: 0.1, ease: "back.out(2)" }, "-=0.6")
         .from(".node-stem", { scaleY: 0, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.4")
         .from(".node-content.top", { opacity: 0, y: 15, duration: 0.5, stagger: 0.1, ease: "power2.out" }, "-=0.3")
